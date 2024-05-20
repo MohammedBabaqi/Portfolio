@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+
+    <title> Y game</title>
+
+    <link rel="stylesheet" href="syle.css">
+</head>
+
+<body>
+    
+    <!--game over card -->
+    <div class="card" id="card">
+        <div class="card-c">
+            <h1>Game Over</h1>
+            <div class="p">
+                <p>Your Score is : </p>
+                <p id="score_C"></p>
+            </div>
+
+            <button onclick="r()">Play Again</button>
+        </div>
+    </div>
+    
+    <section id="n">
+
+
+        <!-- menu -->
+        <div class="Menu"> 
+            <h1>Menu</h1>
+            <p>press <span>Left keys</span> and <span>Right key</span> to play</p>
+            
+            <div class="arrow-c">
+                <div class="arrow" id="leftArrow"><i class='bx bx-left-arrow-alt'></i></div>
+                <div class="arrow" id="RightArrow"><i class='bx bx-right-arrow-alt' ></i></div>
+            </div>
+        </div>
+        
+        <div class="container">
+            
+            <div id="score">Score: 0</div>
+            <div class="game-container">
+                <div class="character"></div>
+            </div>
+            
+        </div>
+        
+    </section>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>
