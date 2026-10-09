@@ -137,7 +137,7 @@
   /* ═══════════════════════ 3D TILT EFFECT ═══════════════════════ */
   var finePointer = window.matchMedia("(pointer: fine)").matches;
   if (finePointer && !reducedMotion) {
-    var tiltTargets = document.querySelectorAll(".capability, .hero-console, .portrait, .terminal");
+    var tiltTargets = document.querySelectorAll(".capability, .hero-console, .portrait, .terminal, .project-card");
     var maxTilt = 5;
     tiltTargets.forEach(function (el) {
       el.setAttribute("data-tilt", "");

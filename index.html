@@ -9,7 +9,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230f2430'/%3E%3Cpath d='M13 40V24l10 11 9-18 8 23 11-17' fill='none' stroke='%23ff5b35' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@75..125,300..800&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Anybody:wdth,wght@75..125,300..800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -64,6 +64,7 @@
 
     <!-- Main Navigation with GitHub & LinkedIn -->
     <nav class="site-nav" aria-label="Primary navigation">
+      <a href="#projects">Projects</a>
       <a href="#systems">Systems</a>
       <a href="#case">Case study</a>
       <a href="#method">Method</a>
@@ -98,7 +99,7 @@
         <p class="hero-intro reveal">Reliable pipelines, thoughtful data models, and platforms that give teams answers they can trust.</p>
 
         <div class="hero-actions reveal">
-          <a class="button button-primary" href="#systems">Explore my work</a>
+          <a class="button button-primary" href="#projects">Explore my projects</a>
           <a class="button button-secondary" href="docs/resume.pdf" target="_blank" rel="noopener noreferrer">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
             Resume (PDF)
@@ -428,6 +429,272 @@
       </div>
     </section>
 
+    <!-- ═══════════════════════ FEATURED PROJECTS ═══════════════════════ -->
+    <section class="projects section" id="projects" aria-labelledby="projects-title">
+      <div class="section-head reveal">
+        <p class="eyebrow">Featured Work</p>
+        <h2 id="projects-title">Real systems,<br>built and deployed.</h2>
+        <p>From production-grade news scrapers and clinical ML benchmarks to large-scale interactive WebGL archives honoring human memory.</p>
+      </div>
+
+      <div class="projects-grid">
+        <!-- 01: Palestine Names Archive (Flagship / Hero Project) -->
+        <article class="project-card project-card-flagship reveal" data-tilt>
+          <div class="project-header">
+            <div class="project-classification">
+              <span class="project-badge project-badge-honor">01 / IMMERSIVE WEBGL &amp; AI ARCHIVE</span>
+              <span class="project-live-badge"><i aria-hidden="true"></i> 72,835+ RECORDS</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/MohammedBabaqi/palestine-names" target="_blank" rel="noopener noreferrer" class="project-gh-link" title="View Palestine Names on GitHub">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                <span>GitHub ↗</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="project-body-grid">
+            <div class="project-info">
+              <h3 class="project-title">
+                <span class="ar-title" lang="ar" dir="rtl">أسماء لا تُنسى</span>
+                <span class="en-title">Palestine Names Archive</span>
+              </h3>
+              <p class="project-lede">From Numbers to Names · An Immersive WebGL &amp; AI Living Memorial</p>
+              <blockquote class="project-quote" lang="ar" dir="rtl">
+                «النسيان هو الموت المشتهى، ولكن الذاكرة لا تموت.»
+                <cite>— محمود درويش (Mahmoud Darwish)</cite>
+              </blockquote>
+              <p class="project-desc">
+                An interactive digital archive honoring 72,835+ documented Palestinian records. Blends Three.js instanced mesh particle simulations, classical editorial typography, an algorithmic virtualized search ledger, and a LangChain AI Archivist powered by OpenRouter LLMs to transform cold statistics into living human memory.
+              </p>
+
+              <div class="project-metrics">
+                <div class="p-metric">
+                  <strong>72,835+</strong>
+                  <span>Indexed Records</span>
+                </div>
+                <div class="p-metric">
+                  <strong>Three.js</strong>
+                  <span>Particle Constellation</span>
+                </div>
+                <div class="p-metric">
+                  <strong>LangChain</strong>
+                  <span>AI Archivist Desk</span>
+                </div>
+                <div class="p-metric">
+                  <strong>O(1)</strong>
+                  <span>Virtualized Ledger</span>
+                </div>
+              </div>
+
+              <ul class="tag-list" aria-label="Palestine Names technologies">
+                <li>Three.js / WebGL</li><li>LangChain</li><li>OpenRouter LLM</li><li>React / Next.js</li><li>Virtualized Data</li><li>Arabic Typography</li>
+              </ul>
+
+              <div class="project-actions-row">
+                <a href="https://github.com/MohammedBabaqi/palestine-names" target="_blank" rel="noopener noreferrer" class="project-action-btn project-action-primary">
+                  Explore Memorial on GitHub ↗
+                </a>
+              </div>
+            </div>
+
+            <div class="project-interactive-preview" aria-hidden="true">
+              <div class="archive-constellation">
+                <div class="constellation-header">
+                  <span>MEMORY ARCHIVE // STREAM INSTANCES</span>
+                  <span class="pulse-beacon">LIVE WEBGL</span>
+                </div>
+                <div class="constellation-canvas-mock">
+                  <svg class="constellation-svg" viewBox="0 0 340 180">
+                    <defs>
+                      <radialGradient id="meshGlow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#ff5b35" stop-opacity="0.3"/>
+                        <stop offset="60%" stop-color="#1167d8" stop-opacity="0.1"/>
+                        <stop offset="100%" stop-color="#0f2430" stop-opacity="0"/>
+                      </radialGradient>
+                    </defs>
+                    <rect width="340" height="180" fill="#091720"/>
+                    <circle cx="170" cy="90" r="75" fill="url(#meshGlow)"/>
+                    <g class="mesh-particles">
+                      <circle cx="170" cy="40" r="2.4" fill="#ffffff"><animate attributeName="opacity" values="0.3;1;0.3" dur="2.1s" repeatCount="indefinite"/></circle>
+                      <circle cx="140" cy="65" r="1.8" fill="#5ed6a2"><animate attributeName="opacity" values="0.4;1;0.4" dur="3s" repeatCount="indefinite"/></circle>
+                      <circle cx="200" cy="65" r="1.8" fill="#ff5b35"><animate attributeName="opacity" values="0.5;1;0.5" dur="2.4s" repeatCount="indefinite"/></circle>
+                      <circle cx="170" cy="90" r="3" fill="#ffffff"><animate attributeName="r" values="2.6;3.6;2.6" dur="1.8s" repeatCount="indefinite"/></circle>
+                      <circle cx="120" cy="95" r="1.6" fill="#1167d8"/>
+                      <circle cx="220" cy="95" r="1.6" fill="#1167d8"/>
+                      <circle cx="95" cy="120" r="1.5" fill="#ffffff" opacity=".6"/>
+                      <circle cx="150" cy="125" r="2" fill="#5ed6a2"/>
+                      <circle cx="190" cy="125" r="2" fill="#ff5b35"/>
+                      <circle cx="245" cy="120" r="1.5" fill="#ffffff" opacity=".6"/>
+                      <circle cx="170" cy="145" r="2.2" fill="#ffffff"><animate attributeName="opacity" values="0.2;1;0.2" dur="2.7s" repeatCount="indefinite"/></circle>
+                      <line x1="170" y1="40" x2="140" y2="65" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+                      <line x1="170" y1="40" x2="200" y2="65" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+                      <line x1="140" y1="65" x2="170" y2="90" stroke="rgba(94,214,162,.25)" stroke-width="1"/>
+                      <line x1="200" y1="65" x2="170" y2="90" stroke="rgba(255,91,53,.25)" stroke-width="1"/>
+                      <line x1="140" y1="65" x2="120" y2="95" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+                      <line x1="200" y1="65" x2="220" y2="95" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+                      <line x1="170" y1="90" x2="150" y2="125" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+                      <line x1="170" y1="90" x2="190" y2="125" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+                      <line x1="150" y1="125" x2="170" y2="145" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+                      <line x1="190" y1="125" x2="170" y2="145" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+                    </g>
+                    <text x="170" y="168" font-family="'IBM Plex Mono', monospace" font-size="8" fill="#8fa5af" text-anchor="middle" letter-spacing="1">72,835 PARTICLES · INSTANCED MESH</text>
+                  </svg>
+                </div>
+                <div class="constellation-footer">
+                  <span>AI Archivist: LangChain · OpenRouter</span>
+                  <a href="https://github.com/MohammedBabaqi/palestine-names" target="_blank" rel="noopener noreferrer">Explore Repository ↗</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 02: InsightBot (Automated Pipeline & NLP) -->
+        <article class="project-card reveal" data-tilt>
+          <div class="project-header">
+            <div class="project-classification">
+              <span class="project-badge">02 / DATA PIPELINE &amp; NLP</span>
+              <span class="project-live-badge"><i aria-hidden="true"></i> 30+ SOURCES</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/dataminds0/InsightBot" target="_blank" rel="noopener noreferrer" class="project-gh-link" title="View InsightBot on GitHub">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                <span>GitHub ↗</span>
+              </a>
+            </div>
+          </div>
+
+          <h3 class="project-title">InsightBot</h3>
+          <p class="project-lede">Automated News Analytics, NLP Topic Modeling &amp; BI Dashboards</p>
+          <p class="project-desc">
+            Automated intelligence pipeline scraping and parsing unstructured content from 30+ news outlets. Orchestrated via Prefect for automated workflows, topic modeling, multi-language detection, and structured MongoDB storage—surfaced to teams via role-based Streamlit and executive Power BI dashboards.
+          </p>
+
+          <div class="project-telemetry" aria-hidden="true">
+            <div class="telemetry-bar">
+              <span>SCRAPING PIPELINE // PREFECT ENGINE</span>
+              <b class="t-ok">30+ OUTLETS SYNCED</b>
+            </div>
+            <div class="telemetry-flow">
+              <div class="t-node"><b>30+ Web Outlets</b><span>Auto-Scraping</span></div>
+              <div class="t-arrow">→</div>
+              <div class="t-node"><b>NLP &amp; Topics</b><span>Multilingual</span></div>
+              <div class="t-arrow">→</div>
+              <div class="t-node"><b>MongoDB</b><span>JSON Storage</span></div>
+              <div class="t-arrow">→</div>
+              <div class="t-node t-highlight"><b>Streamlit / Power BI</b><span>Role-Based Dash</span></div>
+            </div>
+          </div>
+
+          <div class="project-metrics">
+            <div class="p-metric">
+              <strong>30+</strong>
+              <span>Scraped Outlets</span>
+            </div>
+            <div class="p-metric">
+              <strong>Prefect</strong>
+              <span>Flow Orchestration</span>
+            </div>
+            <div class="p-metric">
+              <strong>NLP</strong>
+              <span>Topic &amp; Headline Models</span>
+            </div>
+          </div>
+
+          <ul class="tag-list" aria-label="InsightBot technologies">
+            <li>Python</li><li>Scrapy / BeautifulSoup</li><li>NLP Topic Modeling</li><li>MongoDB</li><li>Prefect</li><li>Streamlit</li><li>Power BI</li>
+          </ul>
+
+          <div class="project-actions-row">
+            <a href="https://github.com/dataminds0/InsightBot" target="_blank" rel="noopener noreferrer" class="project-action-btn project-action-primary">
+              Inspect on GitHub ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 03: DiaClassifier (ML Benchmark & Live App) -->
+        <article class="project-card reveal" data-tilt>
+          <div class="project-header">
+            <div class="project-classification">
+              <span class="project-badge">03 / MACHINE LEARNING &amp; HEALTHCARE</span>
+              <span class="project-live-badge project-live-accent"><i aria-hidden="true"></i> LIVE APP &amp; API</span>
+            </div>
+            <div class="project-links">
+              <a href="https://diaclassifier.streamlit.app" target="_blank" rel="noopener noreferrer" class="project-demo-link" title="Open Live Streamlit App">
+                <span>Live App ↗</span>
+              </a>
+              <a href="https://github.com/MohammedBabaqi/DiaClassifier-Benchmarking-ML-Models" target="_blank" rel="noopener noreferrer" class="project-gh-link" title="View DiaClassifier on GitHub">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                <span>GitHub ↗</span>
+              </a>
+            </div>
+          </div>
+
+          <h3 class="project-title">DiaClassifier</h3>
+          <p class="project-lede">Advanced Diabetes Risk Intelligence &amp; ML Model Benchmarking</p>
+          <p class="project-desc">
+            End-to-end predictive healthcare intelligence benchmarking multiple machine learning architectures across 250,000+ patient records. Implements SMOTE class-balancing and model calibration under a strict Recall-First Detection doctrine to minimize false negatives in clinical triage.
+          </p>
+
+          <div class="project-telemetry" aria-hidden="true">
+            <div class="telemetry-bar">
+              <span>BENCHMARK COMPARISON // RECALL-FIRST METRIC</span>
+              <b class="t-ok">DEPLOYED ON RENDER &amp; STREAMLIT</b>
+            </div>
+            <div class="ml-benchmark-rows">
+              <div class="bench-row">
+                <span class="bench-model">XGBoost (Calibrated + SMOTE)</span>
+                <div class="bench-bar-track"><div class="bench-bar-fill accent" style="width: 92.4%;"></div></div>
+                <span class="bench-val">92.4% Recall ★</span>
+              </div>
+              <div class="bench-row">
+                <span class="bench-model">LightGBM Classifier</span>
+                <div class="bench-bar-track"><div class="bench-bar-fill" style="width: 88.6%;"></div></div>
+                <span class="bench-val">88.6%</span>
+              </div>
+              <div class="bench-row">
+                <span class="bench-model">Random Forest Ensemble</span>
+                <div class="bench-bar-track"><div class="bench-bar-fill" style="width: 85.1%;"></div></div>
+                <span class="bench-val">85.1%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-metrics">
+            <div class="p-metric">
+              <strong>250k+</strong>
+              <span>Patient Dataset</span>
+            </div>
+            <div class="p-metric">
+              <strong>SMOTE</strong>
+              <span>Class Balancing</span>
+            </div>
+            <div class="p-metric">
+              <strong>FastAPI</strong>
+              <span>REST Microservice</span>
+            </div>
+          </div>
+
+          <ul class="tag-list" aria-label="DiaClassifier technologies">
+            <li>Scikit-Learn</li><li>XGBoost</li><li>SMOTE</li><li>FastAPI</li><li>Streamlit Cloud</li><li>Render API</li><li>Model Calibration</li>
+          </ul>
+
+          <div class="project-actions-row">
+            <a href="https://diaclassifier.streamlit.app" target="_blank" rel="noopener noreferrer" class="project-action-btn project-action-primary">
+              Open Live App ↗
+            </a>
+            <a href="https://github.com/MohammedBabaqi/DiaClassifier-Benchmarking-ML-Models" target="_blank" rel="noopener noreferrer" class="project-action-btn">
+              GitHub ↗
+            </a>
+            <a href="https://diaclassifier-api.onrender.com/docs" target="_blank" rel="noopener noreferrer" class="project-action-btn project-action-subtle">
+              FastAPI Docs ↗
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <!-- ═══════════════════════ CASE STUDY ═══════════════════════ -->
     <section class="case section" id="case" aria-labelledby="case-title">
       <div class="case-visual reveal">
@@ -583,6 +850,7 @@
   <footer class="site-footer">
     <a class="footer-brand" href="#top">MB<span aria-hidden="true">↗</span></a>
     <div class="site-footer-links">
+      <a href="#projects">Projects</a>
       <a href="https://github.com/MohammedBabaqi" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="https://www.linkedin.com/in/mohammedbabaqi/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       <a href="docs/resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
