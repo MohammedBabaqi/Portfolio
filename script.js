@@ -303,10 +303,9 @@
   }
 
   /* ═══════════════════════ CASE STUDY SCROLL INTERACTION ═══════════════════════ */
-  var caseSection = document.getElementById("case");
-  var caseBeats = Array.from(document.querySelectorAll(".case-beat-item"));
+  var caseBeats = Array.from(document.querySelectorAll(".case-beats li"));
   var caseTerminalLines = Array.from(document.querySelectorAll("#caseTerminalBody .t-line"));
-  var caseStats = Array.from(document.querySelectorAll(".case-stat-item"));
+  var caseStats = Array.from(document.querySelectorAll(".case-stats div"));
 
   function activateCaseStep(stepNum) {
     var stepStr = String(stepNum);
@@ -332,15 +331,10 @@
     // Highlight terminal lines according to the active step
     caseTerminalLines.forEach(function (line) {
       var lineStep = line.getAttribute("data-step");
-      if (!lineStep) {
-        line.classList.remove("is-highlighted");
-        line.classList.remove("is-dimmed");
-      } else if (lineStep === stepStr) {
-        line.classList.add("is-highlighted");
-        line.classList.remove("is-dimmed");
+      if (lineStep === stepStr) {
+        line.classList.add("is-active-line");
       } else {
-        line.classList.remove("is-highlighted");
-        line.classList.add("is-dimmed");
+        line.classList.remove("is-active-line");
       }
     });
   }
