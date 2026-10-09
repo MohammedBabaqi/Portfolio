@@ -62,26 +62,100 @@
       </div>
     </div>
 
-    <!-- Main Navigation with GitHub & LinkedIn -->
-    <nav class="site-nav" aria-label="Primary navigation">
-      <a href="#projects">Projects</a>
+    <!-- Main Navigation: Systems, Projects, Case Study, Method, About, Contact -->
+    <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
       <a href="#systems">Systems</a>
+      <a href="#projects">Projects</a>
       <a href="#case">Case study</a>
       <a href="#method">Method</a>
       <a href="#about">About</a>
-      <a href="https://github.com/MohammedBabaqi" target="_blank" rel="noopener noreferrer" class="nav-social-link">GitHub ↗</a>
-      <a href="https://www.linkedin.com/in/mohammedbabaqi/" target="_blank" rel="noopener noreferrer" class="nav-social-link">LinkedIn ↗</a>
+      <a href="#contact">Contact</a>
     </nav>
 
-    <!-- Header Actions with Direct Resume Download -->
+    <!-- Header Actions with Direct Resume Download & Mobile Toggle -->
     <div class="header-actions">
       <a class="button-resume" href="docs/resume.pdf" target="_blank" rel="noopener noreferrer" title="Download Resume PDF">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
         <span>Resume</span>
       </a>
       <a class="header-cta" href="#contact">Contact <span aria-hidden="true">↗</span></a>
+      <button class="mobile-nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle navigation menu">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
     </div>
   </header>
+
+  <!-- Mobile Navigation Drawer Overlay -->
+  <div class="mobile-menu-backdrop" id="mobileMenuBackdrop" aria-hidden="true"></div>
+  <aside class="mobile-menu" id="mobileMenu" aria-label="Mobile Navigation" aria-hidden="true">
+    <div class="mobile-menu-header">
+      <div class="mobile-menu-brand">
+        <span class="mobile-menu-title">INDEX / DIRECTORY</span>
+        <span class="mobile-menu-status"><i aria-hidden="true"></i> SANA'A · OPEN FOR WORK</span>
+      </div>
+      <button class="mobile-menu-close" id="mobileMenuClose" type="button" aria-label="Close navigation menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <nav class="mobile-menu-nav">
+      <a href="#systems" class="mobile-nav-link">
+        <span class="mobile-nav-num">01</span>
+        <span class="mobile-nav-text">Systems</span>
+        <span class="mobile-nav-arrow" aria-hidden="true">→</span>
+      </a>
+      <a href="#projects" class="mobile-nav-link">
+        <span class="mobile-nav-num">02</span>
+        <span class="mobile-nav-text">Projects</span>
+        <span class="mobile-nav-arrow" aria-hidden="true">→</span>
+      </a>
+      <a href="#case" class="mobile-nav-link">
+        <span class="mobile-nav-num">03</span>
+        <span class="mobile-nav-text">Case study</span>
+        <span class="mobile-nav-arrow" aria-hidden="true">→</span>
+      </a>
+      <a href="#method" class="mobile-nav-link">
+        <span class="mobile-nav-num">04</span>
+        <span class="mobile-nav-text">Method</span>
+        <span class="mobile-nav-arrow" aria-hidden="true">→</span>
+      </a>
+      <a href="#about" class="mobile-nav-link">
+        <span class="mobile-nav-num">05</span>
+        <span class="mobile-nav-text">About</span>
+        <span class="mobile-nav-arrow" aria-hidden="true">→</span>
+      </a>
+      <a href="#contact" class="mobile-nav-link">
+        <span class="mobile-nav-num">06</span>
+        <span class="mobile-nav-text">Contact</span>
+        <span class="mobile-nav-arrow" aria-hidden="true">→</span>
+      </a>
+    </nav>
+
+    <div class="mobile-menu-footer">
+      <a class="button button-primary mobile-menu-resume" href="docs/resume.pdf" target="_blank" rel="noopener noreferrer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
+        Download Resume (PDF)
+      </a>
+
+      <div class="mobile-menu-socials">
+        <a href="https://github.com/MohammedBabaqi" target="_blank" rel="noopener noreferrer" class="mobile-social-pill">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub ↗
+        </a>
+        <a href="https://www.linkedin.com/in/mohammedbabaqi/" target="_blank" rel="noopener noreferrer" class="mobile-social-pill">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          LinkedIn ↗
+        </a>
+      </div>
+
+      <div class="mobile-menu-meta">
+        <span>Sana'a · <strong id="mobileClock">00:00</strong></span>
+        <span>mbabaqi2020@gmail.com</span>
+      </div>
+    </div>
+  </aside>
 
   <main id="main">
     <!-- ═══════════════════════ HERO ═══════════════════════ -->
@@ -850,6 +924,7 @@
   <footer class="site-footer">
     <a class="footer-brand" href="#top">MB<span aria-hidden="true">↗</span></a>
     <div class="site-footer-links">
+      <a href="#systems">Systems</a>
       <a href="#projects">Projects</a>
       <a href="https://github.com/MohammedBabaqi" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="https://www.linkedin.com/in/mohammedbabaqi/" target="_blank" rel="noopener noreferrer">LinkedIn</a>

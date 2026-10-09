@@ -35,41 +35,112 @@
     });
   }
 
+  /* ═══════════════════════ MOBILE NAVIGATION DRAWER ═══════════════════════ */
+  var navToggle = document.getElementById("navToggle");
+  var mobileMenu = document.getElementById("mobileMenu");
+  var mobileMenuBackdrop = document.getElementById("mobileMenuBackdrop");
+  var mobileMenuClose = document.getElementById("mobileMenuClose");
+  var mobileLinks = Array.from(document.querySelectorAll(".mobile-nav-link"));
+
+  function openMobileNav() {
+    if (!mobileMenu) return;
+    mobileMenu.classList.add("is-open");
+    if (mobileMenuBackdrop) mobileMenuBackdrop.classList.add("is-open");
+    if (navToggle) {
+      navToggle.classList.add("is-active");
+      navToggle.setAttribute("aria-expanded", "true");
+    }
+    mobileMenu.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeMobileNav() {
+    if (!mobileMenu) return;
+    mobileMenu.classList.remove("is-open");
+    if (mobileMenuBackdrop) mobileMenuBackdrop.classList.remove("is-open");
+    if (navToggle) {
+      navToggle.classList.remove("is-active");
+      navToggle.setAttribute("aria-expanded", "false");
+    }
+    mobileMenu.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  if (navToggle) {
+    navToggle.addEventListener("click", function (e) {
+      e.stopPropagation();
+      if (mobileMenu && mobileMenu.classList.contains("is-open")) {
+        closeMobileNav();
+      } else {
+        openMobileNav();
+      }
+    });
+  }
+
+  if (mobileMenuClose) {
+    mobileMenuClose.addEventListener("click", function (e) {
+      e.stopPropagation();
+      closeMobileNav();
+    });
+  }
+
+  if (mobileMenuBackdrop) {
+    mobileMenuBackdrop.addEventListener("click", function () {
+      closeMobileNav();
+    });
+  }
+
+  mobileLinks.forEach(function (link) {
+    link.addEventListener("click", function () {
+      closeMobileNav();
+    });
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && mobileMenu && mobileMenu.classList.contains("is-open")) {
+      closeMobileNav();
+    }
+  });
+
   /* ═══════════════════════ NAVIGATION OBSERVER ═══════════════════════ */
-  var navLinks = Array.from(document.querySelectorAll(".site-nav a"));
-  var sections = navLinks.map(function (link) {
-    var href = link.getAttribute("href");
-    return href && href.startsWith("#") ? document.querySelector(href) : null;
+  var desktopNavLinks = Array.from(document.querySelectorAll(".site-nav a"));
+  var allNavTrackedLinks = desktopNavLinks.concat(mobileLinks);
+  var sectionIds = ["systems", "projects", "case", "method", "about", "contact"];
+  var sections = sectionIds.map(function (id) {
+    return document.getElementById(id);
   }).filter(Boolean);
 
   if ("IntersectionObserver" in window && sections.length) {
     var sectionObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
-        navLinks.forEach(function (link) {
-          var current = link.getAttribute("href") === "#" + entry.target.id;
-          if (current) link.setAttribute("aria-current", "location");
-          else link.removeAttribute("aria-current");
+        allNavTrackedLinks.forEach(function (link) {
+          var href = link.getAttribute("href");
+          var matches = href === "#" + entry.target.id;
+          if (matches) link.setAttribute("aria-current", "location");
+          else if (href && href.startsWith("#")) link.removeAttribute("aria-current");
         });
       });
-    }, { rootMargin: "-30% 0px -60%", threshold: 0 });
+    }, { rootMargin: "-25% 0px -55%", threshold: 0 });
     sections.forEach(function (section) { sectionObserver.observe(section); });
   }
 
   /* ═══════════════════════ SANA'A TIME & YEAR ═══════════════════════ */
   function updateTime() {
     var clock = document.getElementById("clock");
+    var mobileClock = document.getElementById("mobileClock");
     var year = document.getElementById("year");
     var now = new Date();
-    if (clock) {
-      try {
-        clock.textContent = new Intl.DateTimeFormat("en-GB", {
-          timeZone: "Asia/Aden", hour: "2-digit", minute: "2-digit", hour12: false
-        }).format(now);
-      } catch (e) {
-        clock.textContent = now.toTimeString().substring(0, 5);
-      }
+    var timeString = "";
+    try {
+      timeString = new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Asia/Aden", hour: "2-digit", minute: "2-digit", hour12: false
+      }).format(now);
+    } catch (e) {
+      timeString = now.toTimeString().substring(0, 5);
     }
+    if (clock) clock.textContent = timeString;
+    if (mobileClock) mobileClock.textContent = timeString;
     if (year) year.textContent = String(now.getFullYear());
   }
   updateTime();
