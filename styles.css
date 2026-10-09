@@ -99,45 +99,47 @@ button { font: inherit; }
   gap: .75rem;
   padding: .35rem .75rem .35rem .35rem;
   border-radius: 100px;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.7);
   border: 1px solid var(--line);
   box-shadow: 2px 2px 0 rgba(15, 36, 48, 0.04);
-  transition: background .2s, border-color .2s, transform .2s var(--ease), box-shadow .2s;
+  transition: background .2s, border-color .2s, box-shadow .2s;
   cursor: pointer;
   user-select: none;
 }
-.brand:hover,
+.brand:hover {
+  background: var(--white);
+  border-color: var(--line-strong);
+}
 .brand-wrapper.is-open .brand {
   background: var(--white);
   border-color: var(--ink);
   box-shadow: 4px 4px 0 rgba(15, 36, 48, 0.1);
-  transform: translateY(-1px);
 }
 
-.brand-avatar-wrap {
-  position: relative;
-  width: 2.35rem;
-  height: 2.35rem;
+.brand-icon-wrap {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper-warm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
-}
-.brand-avatar {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
   border: 1.5px solid var(--ink);
-  background: var(--paper-2);
+  box-shadow: 0 1px 2px rgba(15, 36, 48, 0.08);
+  transition: background .2s, color .2s, border-color .2s;
 }
-.brand-avatar-status {
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--green);
-  border: 2px solid var(--white);
-  box-shadow: 0 0 0 1px var(--ink);
+.brand-url-icon {
+  width: 17px;
+  height: 17px;
+  stroke: currentColor;
+}
+.brand:hover .brand-icon-wrap,
+.brand-wrapper.is-open .brand-icon-wrap {
+  background: var(--blue);
+  color: var(--white);
+  border-color: var(--blue);
 }
 
 .brand-text {
@@ -162,11 +164,14 @@ button { font: inherit; }
   font-size: .65rem;
   color: var(--muted);
   margin-left: .2rem;
-  transition: transform .2s;
+  transition: transform .2s ease, color .2s;
 }
-.brand:hover .brand-hint { transform: translateY(1px); }
+.brand-wrapper.is-open .brand-hint {
+  transform: rotate(180deg);
+  color: var(--ink);
+}
 
-/* Identity Card Attached to Logo */
+/* Identity Card Attached to Logo - ONLY OPEN ON EXPLICIT CLICK, NO HOVER */
 .brand-identity-card {
   position: absolute;
   top: calc(100% + 12px);
@@ -184,8 +189,6 @@ button { font: inherit; }
   z-index: 150;
 }
 
-.brand-wrapper:hover .brand-identity-card,
-.brand-wrapper:focus-within .brand-identity-card,
 .brand-wrapper.is-open .brand-identity-card {
   opacity: 1;
   transform: translateY(0);
@@ -1132,10 +1135,12 @@ button { font: inherit; }
 }
 .portrait:hover img { filter: saturate(1); transform: scale(1.025); }
 .portrait-main { inset: 0 13% 10% 0; box-shadow: 12px 12px 0 rgba(15,36,48,.1); }
+.portrait-main img { object-position: center 20%; }
 .portrait-detail {
   right: 0; bottom: 0; width: 43%; aspect-ratio: .9;
   border: 8px solid var(--paper); box-shadow: 0 0 0 1px var(--ink), 10px 10px 0 rgba(15,36,48,.12);
 }
+.portrait-detail img { object-position: center 25%; }
 .portrait-detail::after {
   content: ""; position: absolute; left: 8px; top: 8px;
   width: 15px; height: 15px; border: solid var(--orange);
