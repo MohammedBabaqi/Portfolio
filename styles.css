@@ -32,6 +32,8 @@ html {
   scroll-behavior: smooth;
   scrollbar-color: var(--orange) var(--paper-2);
   scrollbar-width: thin;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -41,7 +43,8 @@ body {
   font-family: var(--body);
   font-size: 1rem;
   line-height: 1.6;
-  overflow-x: clip;
+  overflow-x: hidden;
+  max-width: 100vw;
   position: relative;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
