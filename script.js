@@ -302,7 +302,83 @@
     }, 3800);
   }
 
-  /* ═══════════════════════ GSAP ENHANCEMENTS (IF AVAILABLE) ═══════════════════════ */
+  /* ═══════════════════════ CASE STUDY SCROLL INTERACTION ═══════════════════════ */
+  var caseSection = document.getElementById("case");
+  var caseBeats = Array.from(document.querySelectorAll(".case-beat-item"));
+  var caseTerminalLines = Array.from(document.querySelectorAll("#caseTerminalBody .t-line"));
+  var caseStats = Array.from(document.querySelectorAll(".case-stat-item"));
+
+  function activateCaseStep(stepNum) {
+    var stepStr = String(stepNum);
+
+    // Update active beat in story list
+    caseBeats.forEach(function (beat) {
+      if (beat.getAttribute("data-step") === stepStr) {
+        beat.classList.add("is-active");
+      } else {
+        beat.classList.remove("is-active");
+      }
+    });
+
+    // Update active stat
+    caseStats.forEach(function (stat) {
+      if (stat.getAttribute("data-step") === stepStr) {
+        stat.classList.add("is-active");
+      } else {
+        stat.classList.remove("is-active");
+      }
+    });
+
+    // Highlight terminal lines according to the active step
+    caseTerminalLines.forEach(function (line) {
+      var lineStep = line.getAttribute("data-step");
+      if (!lineStep) {
+        line.classList.remove("is-highlighted");
+        line.classList.remove("is-dimmed");
+      } else if (lineStep === stepStr) {
+        line.classList.add("is-highlighted");
+        line.classList.remove("is-dimmed");
+      } else {
+        line.classList.remove("is-highlighted");
+        line.classList.add("is-dimmed");
+      }
+    });
+  }
+
+  // Pointer hover interaction for instant feedback
+  caseBeats.forEach(function (beat) {
+    beat.addEventListener("pointerenter", function () {
+      var s = parseInt(beat.getAttribute("data-step"), 10);
+      if (s) activateCaseStep(s);
+    });
+  });
+
+  // Scroll synchronization
+  if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined" && !reducedMotion) {
+    caseBeats.forEach(function (beat) {
+      var s = parseInt(beat.getAttribute("data-step"), 10);
+      ScrollTrigger.create({
+        trigger: beat,
+        start: "top 60%",
+        end: "bottom 40%",
+        onEnter: function () { activateCaseStep(s); },
+        onEnterBack: function () { activateCaseStep(s); }
+      });
+    });
+  } else if ("IntersectionObserver" in window && caseBeats.length) {
+    var caseObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var s = parseInt(entry.target.getAttribute("data-step"), 10);
+          if (s) activateCaseStep(s);
+        }
+      });
+    }, { rootMargin: "-30% 0px -40%", threshold: 0.1 });
+
+    caseBeats.forEach(function (beat) {
+      caseObserver.observe(beat);
+    });
+  }
   if (typeof gsap !== "undefined" && !reducedMotion) {
     if (typeof ScrollTrigger !== "undefined") {
       gsap.registerPlugin(ScrollTrigger);

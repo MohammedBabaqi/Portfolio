@@ -69,6 +69,7 @@
       <a href="#case">Case study</a>
       <a href="#method">Method</a>
       <a href="#about">About</a>
+      <a href="#contact">Contact</a>
     </nav>
 
     <!-- Header Actions with Direct Resume Download & Mobile Toggle -->
@@ -77,7 +78,6 @@
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
         <span>Resume</span>
       </a>
-      <a class="header-cta" href="#contact">Contact <span aria-hidden="true">↗</span></a>
       <button class="mobile-nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle navigation menu">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
@@ -770,42 +770,42 @@
 
     <!-- ═══════════════════════ CASE STUDY ═══════════════════════ -->
     <section class="case section" id="case" aria-labelledby="case-title">
-      <div class="case-visual reveal">
-        <div class="terminal" aria-hidden="true">
+      <div class="case-visual" id="caseVisual">
+        <div class="terminal reveal" aria-hidden="true">
           <div class="terminal-bar">
             <span></span><span></span><span></span>
             <p>reconcile_revenue.log</p>
           </div>
-          <div class="terminal-body">
-            <p class="t-line t-dim">$ run pipeline --target=daily_revenue</p>
-            <p class="t-line t-dim">→ ingest: orders, refunds, payouts <span class="t-ok">ok</span></p>
-            <p class="t-line t-warn">→ mismatch detected: $4,218 unexplained</p>
-            <p class="t-line t-dim">→ agent.plan() → trace source tables</p>
-            <p class="t-line t-dim">→ agent.tool_call(query_warehouse)</p>
-            <p class="t-line t-ok">→ root cause: late-arriving refund batch</p>
-            <p class="t-line t-ok">→ fix applied · variance <span class="t-highlight">$0.00</span></p>
+          <div class="terminal-body" id="caseTerminalBody">
+            <p class="t-line t-dim t-step-0">$ run pipeline --target=daily_revenue</p>
+            <p class="t-line t-dim t-step-0">→ ingest: orders, refunds, payouts <span class="t-ok">ok</span></p>
+            <p class="t-line t-warn t-step-1 is-highlighted" data-step="1">→ mismatch detected: $4,218 unexplained <span class="t-badge t-badge-warn">FLAGGED</span></p>
+            <p class="t-line t-dim t-step-2" data-step="2">→ agent.plan() → trace source tables</p>
+            <p class="t-line t-dim t-step-2" data-step="2">→ agent.tool_call(query_warehouse) <span class="t-badge t-badge-info">AUTONOMOUS</span></p>
+            <p class="t-line t-ok t-step-3" data-step="3">→ root cause: late-arriving refund batch</p>
+            <p class="t-line t-ok t-step-3" data-step="3">→ fix applied · variance <span class="t-highlight">$0.00</span> <span class="t-badge t-badge-ok">VERIFIED</span></p>
             <p class="t-line t-cursor">_</p>
           </div>
         </div>
-        <dl class="case-stats">
-          <div><dt>6<span>h</span> <span class="visually-hidden">reduced to minutes</span></dt><dd>to detect → now minutes</dd></div>
-          <div><dt>0</dt><dd>unexplained variance</dd></div>
-          <div><dt>24<span>/7</span></dt><dd>agent-monitored</dd></div>
+        <dl class="case-stats reveal" id="caseStats">
+          <div class="case-stat-item is-active" data-step="1"><dt>6<span>h</span> <span class="visually-hidden">reduced to minutes</span></dt><dd>to detect → now minutes</dd></div>
+          <div class="case-stat-item" data-step="2"><dt>0</dt><dd>unexplained variance</dd></div>
+          <div class="case-stat-item" data-step="3"><dt>24<span>/7</span></dt><dd>agent-monitored</dd></div>
         </dl>
       </div>
       <div class="case-copy">
         <p class="eyebrow reveal">A real problem, untangled</p>
         <h2 id="case-title" class="reveal">When the daily revenue<br>number stopped matching.</h2>
         <ol class="case-beats">
-          <li class="reveal">
+          <li class="reveal case-beat-item is-active" data-step="1">
             <span class="case-tag">Problem</span>
             <p>Finance flagged a recurring gap between the dashboard total and the bank statement—small enough to ignore, persistent enough to erode trust in every other number downstream.</p>
           </li>
-          <li class="reveal">
+          <li class="reveal case-beat-item" data-step="2">
             <span class="case-tag">Approach</span>
             <p>Rebuilt the reconciliation step as an agentic check: it plans a trace across orders, refunds, and payouts, calls the warehouse directly, and only escalates when it can name the cause.</p>
           </li>
-          <li class="reveal">
+          <li class="reveal case-beat-item" data-step="3">
             <span class="case-tag">Result</span>
             <p>The same class of mismatch now gets caught and explained before anyone has to ask about it—turning a monthly fire drill into a quiet log line.</p>
           </li>
