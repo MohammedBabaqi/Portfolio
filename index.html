@@ -6,7 +6,7 @@
   <meta name="description" content="Babaqi is a data engineer who builds dependable pipelines, data platforms, and analytics-ready systems.">
   <meta name="theme-color" content="#edf3f4">
   <title>Babaqi — Data Engineer</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230f2430'/%3E%3Cline x1='20' y1='16' x2='20' y2='48' stroke='%235ed6a2' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M20 18.5h14c5.5 0 9.5 4 9.5 8.5s-4 6.5-9.5 6.5H20' fill='none' stroke='%23ff5b35' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M20 33.5h16.5c6 0 10.5 4 10.5 8.5s-4.5 7.5-10.5 7.5H20' fill='none' stroke='%23ff5b35' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='20' cy='18.5' r='3' fill='%23ffffff'/%3E%3Ccircle cx='36.5' cy='42' r='2.5' fill='%235ed6a2'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M15 4h34l11 11v34l-11 11H15L4 49V15z' fill='%230f2430' stroke='rgba(255,255,255,0.2)' stroke-width='1.2'/%3E%3Cpath d='M49 4l11 11' stroke='%23ff5b35' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M15 60L4 49' stroke='%235ed6a2' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='20' y1='16' x2='20' y2='48' stroke='%235ed6a2' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M20 18.5h14c5.5 0 9.5 4 9.5 8.5s-4 6.5-9.5 6.5H20' fill='none' stroke='%23ff5b35' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M20 33.5h16.5c6 0 10.5 4 10.5 8.5s-4.5 7.5-10.5 7.5H20' fill='none' stroke='%23ff5b35' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='20' cy='18.5' r='3' fill='%23ffffff'/%3E%3Ccircle cx='36.5' cy='42' r='2.5' fill='%235ed6a2'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Anybody:wdth,wght@75..125,300..800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -20,11 +20,11 @@
     <div class="brand-wrapper" id="brandWrapper">
       <button class="brand" type="button" id="brandToggle" aria-expanded="false" aria-controls="brandCard" aria-label="Toggle profile card for Babaqi">
         <div class="brand-mark-wrap" aria-hidden="true">
-          <svg class="brand-mark-icon" viewBox="0 0 64 64" width="34" height="34" aria-hidden="true">
+          <svg class="brand-mark-icon" viewBox="0 0 64 64" width="35" height="35" aria-hidden="true">
             <defs>
               <linearGradient id="bLogoBg" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#122530"/>
-                <stop offset="100%" stop-color="#08141b"/>
+                <stop offset="0%" stop-color="#142c3b"/>
+                <stop offset="100%" stop-color="#07151e"/>
               </linearGradient>
               <linearGradient id="bStreamGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#ff7b52"/>
@@ -36,10 +36,21 @@
                 <stop offset="100%" stop-color="#1167d8"/>
               </linearGradient>
             </defs>
-            <rect width="64" height="64" rx="16" fill="url(#bLogoBg)" stroke="rgba(255,255,255,0.08)" stroke-width="1.2"/>
+            <!-- Creative Chamfered Geometric Wafer Plate -->
+            <path d="M 15 4 H 49 L 60 15 V 49 L 49 60 H 15 L 4 49 V 15 Z" fill="url(#bLogoBg)" stroke="rgba(255,255,255,0.14)" stroke-width="1.2"/>
+            <!-- Corner Cybernetic Stream Notches -->
+            <path d="M 49 4 L 60 15" stroke="#ff5b35" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M 15 60 L 4 49" stroke="#5ed6a2" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Inner Micro-contour -->
+            <path d="M 16 7 H 48 L 57 16 V 48 L 48 57 H 16 L 7 48 V 16 Z" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            
+            <!-- Ingest Spine Pipeline -->
             <line x1="20" y1="16" x2="20" y2="48" stroke="url(#bSpineGrad)" stroke-width="5" stroke-linecap="round"/>
+            <!-- Upper Loop: Stream Processing -->
             <path d="M20 18.5 H34.5 C40 18.5 44 22 44 26.5 C44 31 40 33.5 34.5 33.5 H20" fill="none" stroke="url(#bStreamGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Lower Loop: Analytics Warehouse -->
             <path d="M20 33.5 H36.5 C42.5 33.5 47 37 47 42 C47 47 42.5 49.5 36.5 49.5 H20" fill="none" stroke="url(#bStreamGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Telemetry Nodes -->
             <circle cx="20" cy="18.5" r="2.8" fill="#ffffff"/>
             <circle cx="36.5" cy="42" r="2.2" fill="#5ed6a2"/>
           </svg>

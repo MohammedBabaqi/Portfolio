@@ -146,27 +146,28 @@ button { font: inherit; }
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border-radius: 9px;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(15, 36, 48, 0.12);
-  transition: box-shadow .25s var(--ease), transform .25s var(--ease);
+  background: transparent;
+  border-radius: 0;
+  overflow: visible;
+  filter: drop-shadow(0 2px 5px rgba(15, 36, 48, 0.18));
+  transition: filter .25s var(--ease), transform .25s var(--ease);
 }
 .brand-mark-icon {
   display: block;
-  width: 34px;
-  height: 34px;
-  border-radius: 9px;
+  width: 35px;
+  height: 35px;
+  border-radius: 0;
   transition: transform .25s var(--ease);
 }
 .brand:hover .brand-mark-wrap {
-  box-shadow: 0 4px 12px rgba(255, 91, 53, 0.22), 0 2px 6px rgba(15, 36, 48, 0.15);
+  filter: drop-shadow(0 4px 12px rgba(255, 91, 53, 0.35)) drop-shadow(0 2px 4px rgba(15, 36, 48, 0.2));
   transform: translateY(-1px);
 }
 .brand:hover .brand-mark-icon {
-  transform: scale(1.04);
+  transform: scale(1.05);
 }
 .brand-wrapper.is-open .brand-mark-wrap {
-  box-shadow: 0 0 0 2px var(--blue), 0 4px 12px rgba(17, 103, 216, 0.2);
+  filter: drop-shadow(0 0 8px rgba(17, 103, 216, 0.45));
 }
 
 .brand-text {
@@ -2551,24 +2552,24 @@ button { font: inherit; }
     width: 8px; height: 8px;
     border-radius: 50%;
     background: var(--orange);
-    box-shadow: 0 0 10px rgba(255, 91, 53, 0.85);
+    box-shadow: 0 0 10px rgba(255, 91, 53, 0.95), 0 0 2px #fff;
     pointer-events: none;
     will-change: transform;
     opacity: 0;
-    transition: width .2s var(--ease), height .2s var(--ease), background .2s, opacity .2s, scale .2s var(--ease);
+    transition: width .2s var(--ease), height .2s var(--ease), background .2s, opacity .2s, scale .2s var(--ease), box-shadow .2s;
     z-index: 1000000;
   }
 
   .cursor-ring {
     position: fixed;
     top: 0; left: 0;
-    width: 36px; height: 36px;
+    width: 32px; height: 32px;
     border-radius: 50%;
     border: 1.5px solid rgba(15, 36, 48, 0.45);
     pointer-events: none;
     will-change: transform;
     opacity: 0;
-    transition: width .25s var(--ease), height .25s var(--ease), border-color .25s, background .25s, border-radius .25s, opacity .25s, box-shadow .25s, scale .25s var(--ease);
+    transition: width .2s var(--ease), height .2s var(--ease), border-color .2s, background .2s, border-radius .2s, opacity .2s, box-shadow .2s, scale .2s var(--ease);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2593,28 +2594,31 @@ button { font: inherit; }
     opacity: 1;
   }
 
-  /* Interactive link/button hover state */
+  /* Interactive link/button hover state - tight, focused, white glowing dot */
   .custom-cursor.is-hovering .cursor-ring {
-    width: 52px; height: 52px;
+    width: 44px; height: 44px;
     border-color: var(--orange);
-    background: rgba(255, 91, 53, 0.08);
-    box-shadow: 0 0 16px rgba(255, 91, 53, 0.25);
+    background: rgba(255, 91, 53, 0.1);
+    box-shadow: 0 0 14px rgba(255, 91, 53, 0.35);
   }
   .custom-cursor.is-hovering .cursor-dot {
-    scale: 1.35;
-    background: var(--ink);
-    box-shadow: 0 0 8px rgba(15, 36, 48, 0.5);
+    scale: 1.25;
+    background: #ffffff;
+    box-shadow: 0 0 8px #ffffff, 0 0 14px var(--orange);
   }
 
-  /* Card / Explore hover state */
+  /* Card / Explore hover state - dot remains visible at center */
   .custom-cursor.is-view .cursor-ring {
-    width: 64px; height: 64px;
-    background: rgba(15, 36, 48, 0.92);
+    width: 58px; height: 58px;
+    background: rgba(15, 36, 48, 0.94);
     border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   }
   .custom-cursor.is-view .cursor-dot {
-    opacity: 0;
+    opacity: 0.85;
+    scale: 0.75;
+    background: var(--orange);
+    box-shadow: 0 0 6px var(--orange);
   }
   .custom-cursor.is-view .cursor-label {
     opacity: 1;
@@ -2623,24 +2627,36 @@ button { font: inherit; }
 
   /* Code / Terminal hover state */
   .custom-cursor.is-code .cursor-ring {
-    width: 44px; height: 44px;
+    width: 38px; height: 38px;
     border-radius: 4px;
     border-color: #5ed6a2;
-    background: rgba(94, 214, 162, 0.12);
+    background: rgba(94, 214, 162, 0.14);
   }
   .custom-cursor.is-code .cursor-dot {
     background: #5ed6a2;
-    box-shadow: 0 0 8px #5ed6a2;
+    box-shadow: 0 0 8px #5ed6a2, 0 0 2px #fff;
+  }
+
+  /* Text selecting state - tight precision dot and halo */
+  .custom-cursor.is-selecting .cursor-ring {
+    width: 24px; height: 24px;
+    border-color: #5ed6a2;
+    background: rgba(94, 214, 162, 0.15);
+  }
+  .custom-cursor.is-selecting .cursor-dot {
+    scale: 1.15;
+    background: var(--orange);
+    box-shadow: 0 0 10px var(--orange), 0 0 2px #fff;
   }
 
   /* Click / Down state */
   .custom-cursor.is-down .cursor-ring {
-    scale: 0.8;
+    scale: 0.82;
     border-color: var(--orange);
     background: rgba(255, 91, 53, 0.25);
   }
   .custom-cursor.is-down .cursor-dot {
-    scale: 0.65;
+    scale: 0.8;
   }
 }
 
