@@ -2512,7 +2512,7 @@ button { font: inherit; }
 }
 
 /* Strictly hide custom pointer by default (phones, tablets, iPads, touchscreens) */
-.custom-pointer {
+.apple-pointer {
   display: none;
 }
 
@@ -2534,39 +2534,72 @@ button { font: inherit; }
     cursor: none !important;
   }
 
-  .custom-pointer {
+  .apple-pointer {
     display: block;
     position: fixed;
     top: 0; left: 0;
-    width: 22px; height: 26px;
+    width: 0; height: 0;
     pointer-events: none;
     z-index: 1000000;
     will-change: transform;
     opacity: 0;
-    transform-origin: 0 0;
-    filter: drop-shadow(0 2px 7px rgba(255, 91, 53, 0.45)) drop-shadow(0 1px 3px rgba(15, 36, 48, 0.4));
-    transition: opacity .15s ease, scale .15s var(--ease), filter .15s var(--ease);
+    transition: opacity .15s ease;
   }
-  .custom-pointer.is-active {
+  .apple-pointer.is-active {
     opacity: 1;
   }
-  .custom-pointer svg {
-    display: block;
-    width: 100%; height: 100%;
+
+  /* Apple Precision Inner Center Dot */
+  .pointer-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 7px;
+    height: 7px;
+    margin: -3.5px 0 0 -3.5px;
+    border-radius: 50%;
+    background: #ff5b35;
+    box-shadow: 0 0 8px rgba(255, 91, 53, 0.95), 0 0 2px #ffffff;
+    pointer-events: none;
+    transition: transform .2s cubic-bezier(0.16, 1, 0.3, 1), opacity .18s ease;
   }
 
-  /* Interactive link/button hover - sharp modern scale and glowing ambient halo */
-  .custom-pointer.is-hovering {
-    scale: 1.14;
-    filter: drop-shadow(0 3px 12px rgba(255, 91, 53, 0.85)) drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
-  }
-  .custom-pointer.is-hovering path:first-child {
-    stroke: #ff7b52;
+  /* Apple Outer Glass Fluid Ring */
+  .pointer-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 22px;
+    height: 22px;
+    margin: -11px 0 0 -11px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(15, 36, 48, 0.5);
+    background: rgba(15, 36, 48, 0.08);
+    pointer-events: none;
+    transition: transform .24s cubic-bezier(0.16, 1, 0.3, 1), 
+                border-color .2s ease, 
+                background .2s ease, 
+                box-shadow .2s ease;
   }
 
-  /* Click down tactile feedback */
-  .custom-pointer.is-down {
-    scale: 0.92;
+  /* Hover State: Signature Apple Fluid Glass Expansion */
+  .apple-pointer.is-hovering .pointer-dot {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  .apple-pointer.is-hovering .pointer-ring {
+    transform: scale(1.85); /* Smoothly expands from 22px to ~40px */
+    border-color: #ff5b35;
+    background: rgba(255, 91, 53, 0.16);
+    box-shadow: 0 0 16px rgba(255, 91, 53, 0.35), inset 0 0 6px rgba(255, 91, 53, 0.15);
+  }
+
+  /* Click Down: Tactile Apple Spring Compression */
+  .apple-pointer.is-down .pointer-ring {
+    transform: scale(1.35);
+  }
+  .apple-pointer.is-down:not(.is-hovering) .pointer-dot {
+    transform: scale(0.75);
   }
 
   .selection-telemetry {

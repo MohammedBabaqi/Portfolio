@@ -568,12 +568,12 @@
     }
   }
 
-  /* ═══════════════════════ MODERN GLOWING TECH POINTER (DESKTOP ONLY) ═══════════════════════ */
+  /* ═══════════════════════ APPLE-STYLE PRECISION POINTER (DESKTOP ONLY) ═══════════════════════ */
   var isTouchUser = false;
   function disableCustomCursor() {
     isTouchUser = true;
     document.documentElement.classList.remove("has-custom-cursor");
-    var pointerEl = document.getElementById("customPointer");
+    var pointerEl = document.getElementById("applePointer");
     if (pointerEl) pointerEl.style.display = "none";
     var selPill = document.getElementById("selectionTelemetry");
     if (selPill) selPill.style.display = "none";
@@ -581,19 +581,19 @@
   window.addEventListener("touchstart", disableCustomCursor, { passive: true });
 
   var isFinePointerDevice = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-  var customPointer = document.getElementById("customPointer");
+  var applePointer = document.getElementById("applePointer");
   var selectionTelemetry = document.getElementById("selectionTelemetry");
   var selHex = document.getElementById("selHex");
   var selLen = document.getElementById("selLen");
 
-  if (isFinePointerDevice && customPointer && !reducedMotion) {
+  if (isFinePointerDevice && applePointer && !reducedMotion) {
     var mouseX = -100, mouseY = -100;
     var isPointerActive = false;
 
     // Immediately activate custom cursor class so default OS pointer is hidden on desktop
     document.documentElement.classList.add("has-custom-cursor");
 
-    function updatePointer(e) {
+    function updateApplePointer(e) {
       if (isTouchUser || e.pointerType === "touch") {
         disableCustomCursor();
         return;
@@ -603,62 +603,68 @@
 
       if (!isPointerActive) {
         isPointerActive = true;
-        customPointer.classList.add("is-active");
+        applePointer.classList.add("is-active");
         document.documentElement.classList.add("has-custom-cursor");
       }
-      // Instantaneous 1:1 hardware tracking at exact pixel (0,0) tip! Zero lag, zero drifting away!
-      customPointer.style.transform = "translate3d(" + mouseX + "px, " + mouseY + "px, 0)";
+      // Instantaneous 1:1 hardware coordinate tracking directly on the parent
+      applePointer.style.transform = "translate3d(" + mouseX + "px, " + mouseY + "px, 0)";
+
+      // Real-time interactive hover detection: evaluated on every pixel movement
+      // Guarantees immediate entry AND immediate exit back to the circle and dot!
+      var target = e.target;
+      var isInteractive = Boolean(target && target.closest && target.closest(
+        "a, button, [role='button'], input, textarea, select, label, .project-card, .portrait, .archive-window-frame, code, pre, .terminal, .monitor, .agent-console, .tag-list li, .schema-pill, .source, .hub, .destination, .method-list li, [data-copy-email], .brand, .brand-card-btn, .about-link-pill, .copy-button"
+      ));
+
+      if (isInteractive) {
+        applePointer.classList.add("is-hovering");
+      } else {
+        applePointer.classList.remove("is-hovering");
+      }
     }
 
-    window.addEventListener("pointermove", updatePointer, { passive: true });
-    window.addEventListener("mousemove", updatePointer, { passive: true });
+    window.addEventListener("pointermove", updateApplePointer, { passive: true });
+    window.addEventListener("mousemove", updateApplePointer, { passive: true });
 
     document.addEventListener("pointerdown", function (e) {
       if (isTouchUser || e.pointerType === "touch") {
         disableCustomCursor();
         return;
       }
-      customPointer.classList.add("is-down");
+      applePointer.classList.add("is-down");
     });
 
     document.addEventListener("pointerup", function () {
-      customPointer.classList.remove("is-down");
+      applePointer.classList.remove("is-down");
     });
 
     document.addEventListener("mouseleave", function () {
       isPointerActive = false;
-      customPointer.classList.remove("is-active");
+      applePointer.classList.remove("is-active", "is-hovering");
       document.documentElement.classList.remove("has-custom-cursor");
+    });
+
+    document.addEventListener("pointerout", function (e) {
+      if (!e.relatedTarget) {
+        applePointer.classList.remove("is-hovering");
+      }
     });
 
     document.addEventListener("mouseenter", function (e) {
       if (!isTouchUser && e.pointerType !== "touch") {
-        customPointer.classList.add("is-active");
+        applePointer.classList.add("is-active");
         document.documentElement.classList.add("has-custom-cursor");
       }
     });
 
     window.addEventListener("blur", function () {
       document.documentElement.classList.remove("has-custom-cursor");
-      customPointer.classList.remove("is-active");
+      applePointer.classList.remove("is-active", "is-hovering");
     });
 
     window.addEventListener("focus", function () {
       if (!isTouchUser && isFinePointerDevice) {
         document.documentElement.classList.add("has-custom-cursor");
-      }
-    });
-
-    // Interactive element hover state detection
-    document.addEventListener("pointerover", function (e) {
-      if (isTouchUser || !isPointerActive) return;
-      var target = e.target;
-      if (!target || !(target instanceof Element)) return;
-
-      if (target.closest("a, button, [role='button'], .project-card, .portrait, .archive-window-frame, code, pre, .terminal, .monitor, .agent-console, .tag-list li, .schema-pill, .source, .hub, .destination, .method-list li, [data-copy-email]")) {
-        customPointer.classList.add("is-hovering");
-      } else {
-        customPointer.classList.remove("is-hovering");
       }
     });
   }
