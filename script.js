@@ -214,12 +214,16 @@
       el.setAttribute("data-tilt", "");
       el.addEventListener("pointermove", function (event) {
         var rect = el.getBoundingClientRect();
-        var px = (event.clientX - rect.left) / rect.width;
-        var py = (event.clientY - rect.top) / rect.height;
+        var localX = event.clientX - rect.left;
+        var localY = event.clientY - rect.top;
+        var px = localX / rect.width;
+        var py = localY / rect.height;
         var tiltY = (px - 0.5) * maxTilt * 2;
         var tiltX = (0.5 - py) * maxTilt * 2;
         el.style.setProperty("--tilt-x", tiltX.toFixed(2) + "deg");
         el.style.setProperty("--tilt-y", tiltY.toFixed(2) + "deg");
+        el.style.setProperty("--mouse-x", localX.toFixed(1) + "px");
+        el.style.setProperty("--mouse-y", localY.toFixed(1) + "px");
       });
       el.addEventListener("pointerleave", function () {
         el.style.setProperty("--tilt-x", "0deg");
@@ -373,6 +377,99 @@
       caseObserver.observe(beat);
     });
   }
+  /* ═══════════════════════ METHOD SCROLL FADE & STEP FOCUS ═══════════════════════ */
+  var methodSteps = Array.from(document.querySelectorAll(".method-list li"));
+  if (methodSteps.length) {
+    function focusMethodStep(targetStep) {
+      methodSteps.forEach(function (step) {
+        if (step === targetStep) {
+          step.classList.add("is-focused");
+        } else {
+          step.classList.remove("is-focused");
+        }
+      });
+    }
+
+    // Default first step focused on load
+    if (methodSteps[0]) methodSteps[0].classList.add("is-focused");
+
+    // Pointer hover feedback
+    methodSteps.forEach(function (step) {
+      step.addEventListener("pointerenter", function () {
+        focusMethodStep(step);
+      });
+    });
+
+    // Scroll synchronization
+    if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined" && !reducedMotion) {
+      methodSteps.forEach(function (step) {
+        ScrollTrigger.create({
+          trigger: step,
+          start: "top 62%",
+          end: "bottom 38%",
+          onEnter: function () { focusMethodStep(step); },
+          onEnterBack: function () { focusMethodStep(step); }
+        });
+      });
+    } else if ("IntersectionObserver" in window) {
+      var methodObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            focusMethodStep(entry.target);
+          }
+        });
+      }, { rootMargin: "-25% 0px -40% 0px", threshold: 0.15 });
+
+      methodSteps.forEach(function (step) {
+        methodObserver.observe(step);
+      });
+    }
+  }
+
+  /* ═══════════════════════ ML BENCHMARK PROGRESS BARS ANIMATION ═══════════════════════ */
+  var benchBars = Array.from(document.querySelectorAll(".ml-benchmark-rows .bench-bar-fill"));
+  if (benchBars.length && !reducedMotion) {
+    var benchContainer = document.querySelector(".ml-benchmark-rows");
+    if (benchContainer) {
+      // Set to 0% initially for dynamic expansion
+      benchBars.forEach(function (bar) {
+        bar.style.width = "0%";
+      });
+
+      function animateBenchBars() {
+        benchBars.forEach(function (bar, idx) {
+          var targetWidth = bar.getAttribute("data-width") || "80%";
+          window.setTimeout(function () {
+            bar.style.width = targetWidth;
+          }, idx * 120);
+        });
+      }
+
+      if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.create({
+          trigger: benchContainer,
+          start: "top 85%",
+          once: true,
+          onEnter: function () {
+            animateBenchBars();
+          }
+        });
+      } else if ("IntersectionObserver" in window) {
+        var benchObserver = new IntersectionObserver(function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              animateBenchBars();
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.2 });
+        benchObserver.observe(benchContainer);
+      } else {
+        animateBenchBars();
+      }
+    }
+  }
+
   if (typeof gsap !== "undefined" && !reducedMotion) {
     if (typeof ScrollTrigger !== "undefined") {
       gsap.registerPlugin(ScrollTrigger);
