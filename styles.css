@@ -149,19 +149,24 @@ button { font: inherit; }
   border-radius: 9px;
   overflow: hidden;
   box-shadow: 0 1px 3px rgba(15, 36, 48, 0.12);
-  transition: box-shadow .2s;
+  transition: box-shadow .25s var(--ease), transform .25s var(--ease);
 }
 .brand-mark-icon {
   display: block;
   width: 34px;
   height: 34px;
   border-radius: 9px;
+  transition: transform .25s var(--ease);
 }
 .brand:hover .brand-mark-wrap {
-  box-shadow: 0 2px 6px rgba(15, 36, 48, 0.22);
+  box-shadow: 0 4px 12px rgba(255, 91, 53, 0.22), 0 2px 6px rgba(15, 36, 48, 0.15);
+  transform: translateY(-1px);
+}
+.brand:hover .brand-mark-icon {
+  transform: scale(1.04);
 }
 .brand-wrapper.is-open .brand-mark-wrap {
-  box-shadow: 0 0 0 2px var(--blue);
+  box-shadow: 0 0 0 2px var(--blue), 0 4px 12px rgba(17, 103, 216, 0.2);
 }
 
 .brand-text {
@@ -170,9 +175,8 @@ button { font: inherit; }
   line-height: 1.15;
 }
 .brand-name {
-  font-size: .84rem;
-  font-weight: 700;
-  letter-spacing: -.01em;
+  font: 700 .95rem/1.1 var(--display);
+  letter-spacing: -.02em;
   color: var(--ink);
 }
 .brand-role {
