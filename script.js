@@ -286,24 +286,53 @@
     });
   }
 
-  /* ═══════════════════════ AI AGENT STEP CYCLE ═══════════════════════ */
+  /* ═══════════════════════ AI AGENT STEP CYCLE & INTERACTION ═══════════════════════ */
   var agentSteps = Array.from(document.querySelectorAll(".agent-step"));
   if (agentSteps.length && !reducedMotion) {
     var activeStepIdx = 2; // initial active step index (Observe & Eval)
-    window.setInterval(function () {
+    var agentTimer = null;
+    var isAgentHovered = false;
+
+    function renderAgentStep(idx) {
       agentSteps.forEach(function (step, i) {
         step.classList.remove("is-active");
-        if (i < activeStepIdx) {
+        if (i < idx) {
           step.classList.add("is-done");
-        } else if (i === activeStepIdx) {
+        } else if (i === idx) {
           step.classList.remove("is-done");
           step.classList.add("is-active");
         } else {
           step.classList.remove("is-done");
         }
       });
-      activeStepIdx = (activeStepIdx + 1) % agentSteps.length;
-    }, 3800);
+    }
+
+    function startAgentLoop() {
+      if (agentTimer) window.clearInterval(agentTimer);
+      agentTimer = window.setInterval(function () {
+        if (isAgentHovered) return;
+        activeStepIdx = (activeStepIdx + 1) % agentSteps.length;
+        renderAgentStep(activeStepIdx);
+      }, 3600);
+    }
+
+    renderAgentStep(activeStepIdx);
+    startAgentLoop();
+
+    agentSteps.forEach(function (step, i) {
+      step.addEventListener("pointerenter", function () {
+        isAgentHovered = true;
+        activeStepIdx = i;
+        renderAgentStep(i);
+      });
+      step.addEventListener("pointerleave", function () {
+        isAgentHovered = false;
+      });
+      step.addEventListener("click", function () {
+        activeStepIdx = i;
+        renderAgentStep(i);
+      });
+    });
   }
 
   /* ═══════════════════════ CASE STUDY SCROLL INTERACTION ═══════════════════════ */
@@ -496,18 +525,46 @@
         }
       });
 
-      // Modeling bars animation on scroll
-      var schemaTrack = document.querySelector(".capability-schema");
-      if (schemaTrack) {
-        ScrollTrigger.create({
-          trigger: schemaTrack, start: "top 85%", once: true,
-          onEnter: function () {
-            gsap.from(".schema-bar-fill", {
-              width: "0%", duration: 1.2, ease: "power2.out", stagger: .2
-            });
+  /* ═══════════════════════ MODELING SCHEMA PROGRESS BARS ANIMATION ═══════════════════════ */
+  var schemaBars = Array.from(document.querySelectorAll(".schema-bar-fill"));
+  var schemaTrack = document.querySelector(".capability-schema");
+  if (schemaTrack && schemaBars.length && !reducedMotion) {
+    schemaBars.forEach(function (bar) {
+      bar.style.width = "0%";
+    });
+
+    function animateSchemaBars() {
+      schemaBars.forEach(function (bar, idx) {
+        var target = bar.getAttribute("data-width") || "100%";
+        window.setTimeout(function () {
+          bar.style.width = target;
+        }, idx * 160);
+      });
+    }
+
+    if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+      ScrollTrigger.create({
+        trigger: schemaTrack,
+        start: "top 85%",
+        once: true,
+        onEnter: function () {
+          animateSchemaBars();
+        }
+      });
+    } else if ("IntersectionObserver" in window) {
+      var schemaObserver = new IntersectionObserver(function (entries, observer) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            animateSchemaBars();
+            observer.unobserve(entry.target);
           }
         });
-      }
+      }, { threshold: 0.2 });
+      schemaObserver.observe(schemaTrack);
+    } else {
+      animateSchemaBars();
+    }
+  }
     }
   }
 
