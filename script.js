@@ -568,4 +568,179 @@
     }
   }
 
+  /* ═══════════════════════ CREATIVE MOUSE OVER (DESKTOP ONLY) ═══════════════════════ */
+  var isTouchUser = false;
+  window.addEventListener("touchstart", function () {
+    isTouchUser = true;
+    var cursorEl = document.getElementById("customCursor");
+    if (cursorEl) cursorEl.style.display = "none";
+    var selPill = document.getElementById("selectionTelemetry");
+    if (selPill) selPill.style.display = "none";
+  }, { passive: true, once: true });
+
+  var isFinePointerDevice = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var cursorEl = document.getElementById("customCursor");
+  var cursorDot = document.getElementById("cursorDot");
+  var cursorRing = document.getElementById("cursorRing");
+  var cursorLabel = document.getElementById("cursorLabel");
+  var selectionTelemetry = document.getElementById("selectionTelemetry");
+  var selHex = document.getElementById("selHex");
+  var selLen = document.getElementById("selLen");
+
+  if (isFinePointerDevice && cursorEl && cursorDot && cursorRing && !reducedMotion) {
+    var mouseX = -100, mouseY = -100;
+    var ringX = -100, ringY = -100;
+    var isCursorActive = false;
+
+    window.addEventListener("pointermove", function (e) {
+      if (isTouchUser || e.pointerType === "touch") return;
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      if (!isCursorActive) {
+        isCursorActive = true;
+        cursorEl.classList.add("is-active");
+        ringX = mouseX;
+        ringY = mouseY;
+      }
+    }, { passive: true });
+
+    document.addEventListener("pointerdown", function (e) {
+      if (isTouchUser || e.pointerType === "touch") return;
+      cursorEl.classList.add("is-down");
+    });
+
+    document.addEventListener("pointerup", function () {
+      cursorEl.classList.remove("is-down");
+    });
+
+    document.addEventListener("mouseleave", function () {
+      isCursorActive = false;
+      cursorEl.classList.remove("is-active");
+    });
+
+    document.addEventListener("mouseenter", function () {
+      if (!isTouchUser) {
+        cursorEl.classList.add("is-active");
+      }
+    });
+
+    // Interactive element hover state detection
+    document.addEventListener("pointerover", function (e) {
+      if (isTouchUser || !isCursorActive) return;
+      var target = e.target;
+      if (!target || !(target instanceof Element)) return;
+
+      if (target.closest(".project-card, .portrait, .archive-window-frame")) {
+        cursorEl.classList.add("is-view");
+        cursorEl.classList.remove("is-hovering", "is-code");
+        if (cursorLabel) cursorLabel.textContent = "VIEW";
+      } else if (target.closest("code, pre, .terminal, .monitor, .agent-console")) {
+        cursorEl.classList.add("is-code");
+        cursorEl.classList.remove("is-hovering", "is-view");
+        if (cursorLabel) cursorLabel.textContent = "EXEC";
+      } else if (target.closest("a, button, .tag-list li, .schema-pill, .source, .hub, .destination, .method-list li, [data-copy-email]")) {
+        cursorEl.classList.add("is-hovering");
+        cursorEl.classList.remove("is-view", "is-code");
+        if (cursorLabel) cursorLabel.textContent = "";
+      } else {
+        cursorEl.classList.remove("is-hovering", "is-view", "is-code");
+        if (cursorLabel) cursorLabel.textContent = "";
+      }
+    });
+
+    // 60fps Smooth Lerp Loop
+    function renderCursor() {
+      if (isCursorActive && !isTouchUser) {
+        ringX += (mouseX - ringX) * 0.18;
+        ringY += (mouseY - ringY) * 0.18;
+        cursorDot.style.transform = "translate3d(" + mouseX + "px, " + mouseY + "px, 0) translate(-50%, -50%)";
+        cursorRing.style.transform = "translate3d(" + ringX.toFixed(2) + "px, " + ringY.toFixed(2) + "px, 0) translate(-50%, -50%)";
+      }
+      window.requestAnimationFrame(renderCursor);
+    }
+    renderCursor();
+  }
+
+  /* ═══════════════════════ CREATIVE TEXT SELECTION TELEMETRY ═══════════════════════ */
+  if (selectionTelemetry && !reducedMotion) {
+    function updateSelectionHUD() {
+      if (isTouchUser) return;
+      var sel = window.getSelection();
+      var text = sel ? sel.toString().trim() : "";
+      if (text.length > 0 && sel.rangeCount > 0) {
+        var range = sel.getRangeAt(0);
+        var rect = range.getBoundingClientRect();
+        if (rect && rect.width > 0 && rect.height > 0) {
+          var hudTop = Math.max(14, rect.top - 38);
+          var hudLeft = Math.min(window.innerWidth - 220, Math.max(12, rect.left + rect.width / 2 - 80));
+          selectionTelemetry.style.top = hudTop + "px";
+          selectionTelemetry.style.left = hudLeft + "px";
+          selectionTelemetry.classList.add("is-active");
+
+          if (selLen) {
+            selLen.textContent = text.length + (text.length === 1 ? " CHAR" : " CHARS");
+          }
+          if (selHex) {
+            var hexString = "";
+            var sample = text.substring(0, 3);
+            for (var i = 0; i < sample.length; i++) {
+              hexString += "0x" + sample.charCodeAt(i).toString(16).toUpperCase() + " ";
+            }
+            selHex.textContent = hexString.trim();
+          }
+          return;
+        }
+      }
+      selectionTelemetry.classList.remove("is-active");
+    }
+
+    document.addEventListener("selectionchange", updateSelectionHUD);
+    document.addEventListener("pointerup", function () {
+      window.setTimeout(updateSelectionHUD, 60);
+    });
+  }
+
+  /* ═══════════════════════ CIPHER TEXT SCRAMBLE (MOUSE OVER NUMBERS & STUFF) ═══════════════════════ */
+  var scrambleTargets = Array.from(document.querySelectorAll(
+    ".card-index, .project-badge, .eyebrow, .tag-list li, .schema-pill, .brand-card-btn, .about-link-pill, .method-code"
+  ));
+
+  var cipherChars = "01234567890123456789#%&*+=-_/<>";
+  function scrambleElement(el) {
+    if (el._isScrambling || reducedMotion || isTouchUser) return;
+    var original = el.getAttribute("data-original-text") || el.textContent.trim();
+    if (!el.getAttribute("data-original-text")) {
+      el.setAttribute("data-original-text", original);
+    }
+    if (original.length > 40 || /[\u0600-\u06FF]/.test(original)) return;
+
+    el._isScrambling = true;
+    var iteration = 0;
+    var maxIterations = original.length + 5;
+
+    var scrambler = window.setInterval(function () {
+      el.textContent = original.split("").map(function (char, idx) {
+        if (char === " " || char === "/" || char === "·" || char === "→" || char === "★") return char;
+        if (idx < iteration - 2) {
+          return original[idx];
+        }
+        return cipherChars[Math.floor(Math.random() * cipherChars.length)];
+      }).join("");
+
+      iteration += 1;
+      if (iteration >= maxIterations) {
+        window.clearInterval(scrambler);
+        el.textContent = original;
+        el._isScrambling = false;
+      }
+    }, 28);
+  }
+
+  scrambleTargets.forEach(function (el) {
+    el.addEventListener("pointerenter", function () {
+      scrambleElement(el);
+    });
+  });
+
 })();
