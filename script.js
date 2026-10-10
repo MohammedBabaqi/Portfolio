@@ -568,36 +568,32 @@
     }
   }
 
-  /* ═══════════════════════ CREATIVE MOUSE OVER (DESKTOP ONLY) ═══════════════════════ */
+  /* ═══════════════════════ MODERN GLOWING TECH POINTER (DESKTOP ONLY) ═══════════════════════ */
   var isTouchUser = false;
   function disableCustomCursor() {
     isTouchUser = true;
     document.documentElement.classList.remove("has-custom-cursor");
-    var cursorEl = document.getElementById("customCursor");
-    if (cursorEl) cursorEl.style.display = "none";
+    var pointerEl = document.getElementById("customPointer");
+    if (pointerEl) pointerEl.style.display = "none";
     var selPill = document.getElementById("selectionTelemetry");
     if (selPill) selPill.style.display = "none";
   }
   window.addEventListener("touchstart", disableCustomCursor, { passive: true });
 
   var isFinePointerDevice = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-  var cursorEl = document.getElementById("customCursor");
-  var cursorDot = document.getElementById("cursorDot");
-  var cursorRing = document.getElementById("cursorRing");
-  var cursorLabel = document.getElementById("cursorLabel");
+  var customPointer = document.getElementById("customPointer");
   var selectionTelemetry = document.getElementById("selectionTelemetry");
   var selHex = document.getElementById("selHex");
   var selLen = document.getElementById("selLen");
 
-  if (isFinePointerDevice && cursorEl && cursorDot && cursorRing && !reducedMotion) {
+  if (isFinePointerDevice && customPointer && !reducedMotion) {
     var mouseX = -100, mouseY = -100;
-    var ringX = -100, ringY = -100;
-    var isCursorActive = false;
+    var isPointerActive = false;
 
     // Immediately activate custom cursor class so default OS pointer is hidden on desktop
     document.documentElement.classList.add("has-custom-cursor");
 
-    function onMove(e) {
+    function updatePointer(e) {
       if (isTouchUser || e.pointerType === "touch") {
         disableCustomCursor();
         return;
@@ -605,47 +601,46 @@
       mouseX = e.clientX;
       mouseY = e.clientY;
 
-      if (!isCursorActive) {
-        isCursorActive = true;
-        cursorEl.classList.add("is-active");
+      if (!isPointerActive) {
+        isPointerActive = true;
+        customPointer.classList.add("is-active");
         document.documentElement.classList.add("has-custom-cursor");
-        ringX = mouseX;
-        ringY = mouseY;
-        cursorDot.style.transform = "translate3d(" + mouseX + "px, " + mouseY + "px, 0) translate(-50%, -50%)";
-        cursorRing.style.transform = "translate3d(" + ringX.toFixed(2) + "px, " + ringY.toFixed(2) + "px, 0) translate(-50%, -50%)";
       }
+      // Instantaneous 1:1 hardware tracking at exact pixel (0,0) tip! Zero lag, zero drifting away!
+      customPointer.style.transform = "translate3d(" + mouseX + "px, " + mouseY + "px, 0)";
     }
-    window.addEventListener("pointermove", onMove, { passive: true });
-    window.addEventListener("mousemove", onMove, { passive: true });
+
+    window.addEventListener("pointermove", updatePointer, { passive: true });
+    window.addEventListener("mousemove", updatePointer, { passive: true });
 
     document.addEventListener("pointerdown", function (e) {
       if (isTouchUser || e.pointerType === "touch") {
         disableCustomCursor();
         return;
       }
-      cursorEl.classList.add("is-down");
+      customPointer.classList.add("is-down");
     });
 
     document.addEventListener("pointerup", function () {
-      cursorEl.classList.remove("is-down");
+      customPointer.classList.remove("is-down");
     });
 
     document.addEventListener("mouseleave", function () {
-      isCursorActive = false;
-      cursorEl.classList.remove("is-active");
+      isPointerActive = false;
+      customPointer.classList.remove("is-active");
       document.documentElement.classList.remove("has-custom-cursor");
     });
 
     document.addEventListener("mouseenter", function (e) {
       if (!isTouchUser && e.pointerType !== "touch") {
-        cursorEl.classList.add("is-active");
+        customPointer.classList.add("is-active");
         document.documentElement.classList.add("has-custom-cursor");
       }
     });
 
     window.addEventListener("blur", function () {
       document.documentElement.classList.remove("has-custom-cursor");
-      cursorEl.classList.remove("is-active");
+      customPointer.classList.remove("is-active");
     });
 
     window.addEventListener("focus", function () {
@@ -656,39 +651,16 @@
 
     // Interactive element hover state detection
     document.addEventListener("pointerover", function (e) {
-      if (isTouchUser || !isCursorActive) return;
+      if (isTouchUser || !isPointerActive) return;
       var target = e.target;
       if (!target || !(target instanceof Element)) return;
 
-      if (target.closest(".project-card, .portrait, .archive-window-frame")) {
-        cursorEl.classList.add("is-view");
-        cursorEl.classList.remove("is-hovering", "is-code");
-        if (cursorLabel) cursorLabel.textContent = "VIEW";
-      } else if (target.closest("code, pre, .terminal, .monitor, .agent-console")) {
-        cursorEl.classList.add("is-code");
-        cursorEl.classList.remove("is-hovering", "is-view");
-        if (cursorLabel) cursorLabel.textContent = "EXEC";
-      } else if (target.closest("a, button, .tag-list li, .schema-pill, .source, .hub, .destination, .method-list li, [data-copy-email]")) {
-        cursorEl.classList.add("is-hovering");
-        cursorEl.classList.remove("is-view", "is-code");
-        if (cursorLabel) cursorLabel.textContent = "";
+      if (target.closest("a, button, [role='button'], .project-card, .portrait, .archive-window-frame, code, pre, .terminal, .monitor, .agent-console, .tag-list li, .schema-pill, .source, .hub, .destination, .method-list li, [data-copy-email]")) {
+        customPointer.classList.add("is-hovering");
       } else {
-        cursorEl.classList.remove("is-hovering", "is-view", "is-code");
-        if (cursorLabel) cursorLabel.textContent = "";
+        customPointer.classList.remove("is-hovering");
       }
     });
-
-    // 60fps Smooth Lerp Loop (responsive 0.36 factor prevents lag drift)
-    function renderCursor() {
-      if (isCursorActive && !isTouchUser) {
-        ringX += (mouseX - ringX) * 0.36;
-        ringY += (mouseY - ringY) * 0.36;
-        cursorDot.style.transform = "translate3d(" + mouseX + "px, " + mouseY + "px, 0) translate(-50%, -50%)";
-        cursorRing.style.transform = "translate3d(" + ringX.toFixed(2) + "px, " + ringY.toFixed(2) + "px, 0) translate(-50%, -50%)";
-      }
-      window.requestAnimationFrame(renderCursor);
-    }
-    renderCursor();
   }
 
   /* ═══════════════════════ CREATIVE TEXT SELECTION TELEMETRY ═══════════════════════ */
@@ -728,22 +700,13 @@
     }
 
     document.addEventListener("selectionchange", function () {
-      var sel = window.getSelection();
-      var hasText = sel && sel.toString().trim().length > 0;
-      if (cursorEl) {
-        if (hasText) {
-          cursorEl.classList.add("is-selecting");
-        } else {
-          cursorEl.classList.remove("is-selecting");
-        }
-      }
       updateSelectionHUD();
     });
 
-    // Real-time tracking on scroll (smoothly follows or fades out when scrolled past)
+    // Immediately dismiss selection HUD on scroll so it never lingers or gets stuck
     window.addEventListener("scroll", function () {
-      if (selectionTelemetry.classList.contains("is-active")) {
-        updateSelectionHUD();
+      if (selectionTelemetry && selectionTelemetry.classList.contains("is-active")) {
+        selectionTelemetry.classList.remove("is-active");
       }
     }, { passive: true });
 

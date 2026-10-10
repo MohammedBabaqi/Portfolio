@@ -6,7 +6,7 @@
   <meta name="description" content="Babaqi is a data engineer who builds dependable pipelines, data platforms, and analytics-ready systems.">
   <meta name="theme-color" content="#edf3f4">
   <title>Babaqi — Data Engineer</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M15 4h34l11 11v34l-11 11H15L4 49V15z' fill='%230f2430' stroke='rgba(255,255,255,0.2)' stroke-width='1.2'/%3E%3Cpath d='M49 4l11 11' stroke='%23ff5b35' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M15 60L4 49' stroke='%235ed6a2' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='20' y1='16' x2='20' y2='48' stroke='%235ed6a2' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M20 18.5h14c5.5 0 9.5 4 9.5 8.5s-4 6.5-9.5 6.5H20' fill='none' stroke='%23ff5b35' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M20 33.5h16.5c6 0 10.5 4 10.5 8.5s-4.5 7.5-10.5 7.5H20' fill='none' stroke='%23ff5b35' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='20' cy='18.5' r='3' fill='%23ffffff'/%3E%3Ccircle cx='36.5' cy='42' r='2.5' fill='%235ed6a2'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M15 4h34l11 11v34l-11 11H15L4 49V15z' fill='%230f2430' stroke='rgba(255,255,255,0.2)' stroke-width='1.2'/%3E%3Cpath d='M49 4l11 11' stroke='%23ff5b35' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M15 60L4 49' stroke='%235ed6a2' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M16 38v6c0 4.5 7.2 7.5 16 7.5s16-3 16-7.5v-6' fill='none' stroke='%23edf3f4' stroke-width='3.2' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='45' r='2' fill='%235ed6a2'/%3E%3Cpath d='M16 27v6c0 4.5 7.2 7.5 16 7.5s16-3 16-7.5v-6' fill='none' stroke='%23edf3f4' stroke-width='3.2' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='34' r='2' fill='%23ff5b35'/%3E%3Cpath d='M16 16v6c0 4.5 7.2 7.5 16 7.5s16-3 16-7.5v-6' fill='none' stroke='%23edf3f4' stroke-width='3.2' stroke-linecap='round'/%3E%3Cellipse cx='32' cy='16' rx='16' ry='6.5' fill='%23ff5b35' stroke='%23edf3f4' stroke-width='2.5'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Anybody:wdth,wght@75..125,300..800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -26,33 +26,37 @@
                 <stop offset="0%" stop-color="#142c3b"/>
                 <stop offset="100%" stop-color="#07151e"/>
               </linearGradient>
-              <linearGradient id="bStreamGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <linearGradient id="dbPlatterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#ff7b52"/>
                 <stop offset="50%" stop-color="#ff5b35"/>
                 <stop offset="100%" stop-color="#e83610"/>
               </linearGradient>
-              <linearGradient id="bSpineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#5ed6a2"/>
-                <stop offset="100%" stop-color="#1167d8"/>
-              </linearGradient>
             </defs>
             <!-- Creative Chamfered Geometric Wafer Plate -->
             <path d="M 15 4 H 49 L 60 15 V 49 L 49 60 H 15 L 4 49 V 15 Z" fill="url(#bLogoBg)" stroke="rgba(255,255,255,0.14)" stroke-width="1.2"/>
-            <!-- Corner Cybernetic Stream Notches -->
+            <!-- Corner Cybernetic Accent Notches -->
             <path d="M 49 4 L 60 15" stroke="#ff5b35" stroke-width="2.5" stroke-linecap="round"/>
             <path d="M 15 60 L 4 49" stroke="#5ed6a2" stroke-width="2.5" stroke-linecap="round"/>
-            <!-- Inner Micro-contour -->
+            <!-- Inner Micro-contour Hairline -->
             <path d="M 16 7 H 48 L 57 16 V 48 L 48 57 H 16 L 7 48 V 16 Z" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
             
-            <!-- Ingest Spine Pipeline -->
-            <line x1="20" y1="16" x2="20" y2="48" stroke="url(#bSpineGrad)" stroke-width="5" stroke-linecap="round"/>
-            <!-- Upper Loop: Stream Processing -->
-            <path d="M20 18.5 H34.5 C40 18.5 44 22 44 26.5 C44 31 40 33.5 34.5 33.5 H20" fill="none" stroke="url(#bStreamGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-            <!-- Lower Loop: Analytics Warehouse -->
-            <path d="M20 33.5 H36.5 C42.5 33.5 47 37 47 42 C47 47 42.5 49.5 36.5 49.5 H20" fill="none" stroke="url(#bStreamGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-            <!-- Telemetry Nodes -->
-            <circle cx="20" cy="18.5" r="2.8" fill="#ffffff"/>
-            <circle cx="36.5" cy="42" r="2.2" fill="#5ed6a2"/>
+            <!-- Modern 3-Tier Database Cylinder Stack -->
+            <!-- Tier 3: Bottom Platter (Storage Partition) -->
+            <path d="M 16 38 V 44 C 16 48.5 23.2 51.5 32 51.5 C 40.8 51.5 48 48.5 48 44 V 38" fill="none" stroke="#edf3f4" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="32" cy="45" r="2" fill="#5ed6a2"/>
+
+            <!-- Tier 2: Middle Platter (Compute & Query Engine) -->
+            <path d="M 16 27 V 33 C 16 37.5 23.2 40.5 32 40.5 C 40.8 40.5 48 37.5 48 33 V 27" fill="none" stroke="#edf3f4" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="32" cy="34" r="2" fill="#ff5b35"/>
+
+            <!-- Tier 1: Top Platter (Hot Storage & Ingest) -->
+            <path d="M 16 16 V 22 C 16 26.5 23.2 29.5 32 29.5 C 40.8 29.5 48 26.5 48 22 V 16" fill="none" stroke="#edf3f4" stroke-width="3" stroke-linecap="round"/>
+            <ellipse cx="32" cy="16" rx="16" ry="6.5" fill="url(#dbPlatterGrad)" stroke="#edf3f4" stroke-width="2.5"/>
+            <ellipse cx="32" cy="16" rx="7.5" ry="3" fill="#ffffff" opacity="0.4"/>
+
+            <!-- Data Stream Conduits (Left & Right Flanks) -->
+            <line x1="16" y1="16" x2="16" y2="44" stroke="#ff5b35" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="2.5 3"/>
+            <line x1="48" y1="16" x2="48" y2="44" stroke="#5ed6a2" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="2.5 3"/>
           </svg>
         </div>
         <div class="brand-text">
@@ -945,12 +949,19 @@
     </div>
   </footer>
  
-  <!-- Creative Custom Mouse Follower & Selection Telemetry (Desktop Pointer Only) -->
-  <div class="custom-cursor" id="customCursor" aria-hidden="true">
-    <div class="cursor-dot" id="cursorDot"></div>
-    <div class="cursor-ring" id="cursorRing">
-      <span class="cursor-label" id="cursorLabel"></span>
-    </div>
+  <!-- Modern Glowing Tech Pointer (Desktop Fine Pointer Only) -->
+  <div class="custom-pointer" id="customPointer" aria-hidden="true">
+    <svg viewBox="0 0 24 28" fill="none" width="22" height="26">
+      <path d="M 1.5 1.5 L 1.5 21 L 6.8 16.2 L 11 25.5 L 14.8 23.8 L 10.6 14.6 L 17.5 14.6 Z" 
+            fill="#091821" 
+            stroke="#ff5b35" 
+            stroke-width="1.8" 
+            stroke-linejoin="round"/>
+      <path d="M 3.2 4 L 3.2 17.5 L 6.8 14.2 L 10 21.5 L 12.2 20.5 L 9 13.2 L 14.5 13.2 Z" 
+            fill="#ff5b35" 
+            opacity="0.25"/>
+      <circle cx="2" cy="2" r="1.5" fill="#ffffff"/>
+    </svg>
   </div>
   <div class="selection-telemetry" id="selectionTelemetry" aria-hidden="true">
     <span class="sel-tag">DATA // CIPHER</span>
