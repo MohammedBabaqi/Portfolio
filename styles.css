@@ -2513,6 +2513,22 @@ button { font: inherit; }
 
 /* ONLY enable and display on desktop with fine pointer & hover */
 @media (hover: hover) and (pointer: fine) {
+  /* Complete elimination of the default OS mouse pointer arrow/hand when custom cursor is active */
+  html.has-custom-cursor,
+  html.has-custom-cursor body,
+  html.has-custom-cursor *,
+  html.has-custom-cursor *::before,
+  html.has-custom-cursor *::after,
+  html.has-custom-cursor a,
+  html.has-custom-cursor button,
+  html.has-custom-cursor [role="button"],
+  html.has-custom-cursor input,
+  html.has-custom-cursor select,
+  html.has-custom-cursor textarea,
+  html.has-custom-cursor label {
+    cursor: none !important;
+  }
+
   .custom-cursor {
     display: block;
     position: fixed;
@@ -2531,11 +2547,11 @@ button { font: inherit; }
     width: 8px; height: 8px;
     border-radius: 50%;
     background: var(--orange);
-    box-shadow: 0 0 8px rgba(255, 91, 53, 0.75);
+    box-shadow: 0 0 10px rgba(255, 91, 53, 0.85);
     pointer-events: none;
     will-change: transform;
     opacity: 0;
-    transition: width .2s var(--ease), height .2s var(--ease), background .2s, opacity .2s;
+    transition: width .2s var(--ease), height .2s var(--ease), background .2s, opacity .2s, scale .2s var(--ease);
     z-index: 1000000;
   }
 
@@ -2544,11 +2560,11 @@ button { font: inherit; }
     top: 0; left: 0;
     width: 36px; height: 36px;
     border-radius: 50%;
-    border: 1.5px solid rgba(15, 36, 48, 0.4);
+    border: 1.5px solid rgba(15, 36, 48, 0.45);
     pointer-events: none;
     will-change: transform;
     opacity: 0;
-    transition: width .25s var(--ease), height .25s var(--ease), border-color .25s, background .25s, border-radius .25s, opacity .25s, box-shadow .25s;
+    transition: width .25s var(--ease), height .25s var(--ease), border-color .25s, background .25s, border-radius .25s, opacity .25s, box-shadow .25s, scale .25s var(--ease);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2581,7 +2597,7 @@ button { font: inherit; }
     box-shadow: 0 0 16px rgba(255, 91, 53, 0.25);
   }
   .custom-cursor.is-hovering .cursor-dot {
-    transform: translate(-50%, -50%) scale(1.3);
+    scale: 1.35;
     background: var(--ink);
     box-shadow: 0 0 8px rgba(15, 36, 48, 0.5);
   }
@@ -2590,7 +2606,7 @@ button { font: inherit; }
   .custom-cursor.is-view .cursor-ring {
     width: 64px; height: 64px;
     background: rgba(15, 36, 48, 0.92);
-    border-color: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
   }
   .custom-cursor.is-view .cursor-dot {
@@ -2615,12 +2631,12 @@ button { font: inherit; }
 
   /* Click / Down state */
   .custom-cursor.is-down .cursor-ring {
-    transform: translate(-50%, -50%) scale(0.75);
+    scale: 0.8;
     border-color: var(--orange);
     background: rgba(255, 91, 53, 0.25);
   }
   .custom-cursor.is-down .cursor-dot {
-    transform: translate(-50%, -50%) scale(0.6);
+    scale: 0.65;
   }
 }
 

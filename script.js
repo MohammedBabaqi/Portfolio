@@ -570,13 +570,15 @@
 
   /* ═══════════════════════ CREATIVE MOUSE OVER (DESKTOP ONLY) ═══════════════════════ */
   var isTouchUser = false;
-  window.addEventListener("touchstart", function () {
+  function disableCustomCursor() {
     isTouchUser = true;
+    document.documentElement.classList.remove("has-custom-cursor");
     var cursorEl = document.getElementById("customCursor");
     if (cursorEl) cursorEl.style.display = "none";
     var selPill = document.getElementById("selectionTelemetry");
     if (selPill) selPill.style.display = "none";
-  }, { passive: true, once: true });
+  }
+  window.addEventListener("touchstart", disableCustomCursor, { passive: true });
 
   var isFinePointerDevice = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   var cursorEl = document.getElementById("customCursor");
@@ -592,21 +594,33 @@
     var ringX = -100, ringY = -100;
     var isCursorActive = false;
 
+    // Immediately activate custom cursor class so default OS pointer is hidden on desktop
+    document.documentElement.classList.add("has-custom-cursor");
+
     window.addEventListener("pointermove", function (e) {
-      if (isTouchUser || e.pointerType === "touch") return;
+      if (isTouchUser || e.pointerType === "touch") {
+        disableCustomCursor();
+        return;
+      }
       mouseX = e.clientX;
       mouseY = e.clientY;
 
       if (!isCursorActive) {
         isCursorActive = true;
         cursorEl.classList.add("is-active");
+        document.documentElement.classList.add("has-custom-cursor");
         ringX = mouseX;
         ringY = mouseY;
+        cursorDot.style.transform = "translate3d(" + mouseX + "px, " + mouseY + "px, 0) translate(-50%, -50%)";
+        cursorRing.style.transform = "translate3d(" + ringX.toFixed(2) + "px, " + ringY.toFixed(2) + "px, 0) translate(-50%, -50%)";
       }
     }, { passive: true });
 
     document.addEventListener("pointerdown", function (e) {
-      if (isTouchUser || e.pointerType === "touch") return;
+      if (isTouchUser || e.pointerType === "touch") {
+        disableCustomCursor();
+        return;
+      }
       cursorEl.classList.add("is-down");
     });
 
@@ -617,11 +631,24 @@
     document.addEventListener("mouseleave", function () {
       isCursorActive = false;
       cursorEl.classList.remove("is-active");
+      document.documentElement.classList.remove("has-custom-cursor");
     });
 
-    document.addEventListener("mouseenter", function () {
-      if (!isTouchUser) {
+    document.addEventListener("mouseenter", function (e) {
+      if (!isTouchUser && e.pointerType !== "touch") {
         cursorEl.classList.add("is-active");
+        document.documentElement.classList.add("has-custom-cursor");
+      }
+    });
+
+    window.addEventListener("blur", function () {
+      document.documentElement.classList.remove("has-custom-cursor");
+      cursorEl.classList.remove("is-active");
+    });
+
+    window.addEventListener("focus", function () {
+      if (!isTouchUser && isFinePointerDevice) {
+        document.documentElement.classList.add("has-custom-cursor");
       }
     });
 
