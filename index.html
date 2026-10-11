@@ -961,10 +961,25 @@
     </div>
   </footer>
  
-  <!-- Apple-Style Precision Pointer (Desktop Fine Pointer Only) -->
-  <div class="apple-pointer" id="applePointer" aria-hidden="true">
-    <div class="pointer-ring" id="pointerRing"></div>
-    <div class="pointer-dot" id="pointerDot"></div>
+  <!-- Creative Custom Mouse (Dot Pointer + Accessory Follower) -->
+  <div class="custom-cursor" id="customCursor" aria-hidden="true">
+    <div class="cursor-dot" id="cursorDot">
+      <!-- Mini iOS Arrow Pointer SVG (morphs into view on button/link hover) -->
+      <svg class="ios-pointer-icon" viewBox="0 0 16 20" fill="none">
+        <path d="M 1 1 L 1 15 L 4.8 11.5 L 7.8 18 L 10.5 16.8 L 7.5 10.4 L 12.5 10.4 Z" 
+              fill="#091821" 
+              stroke="#ff5b35" 
+              stroke-width="1.4" 
+              stroke-linejoin="round"/>
+        <path d="M 2.2 3 L 2.2 12.5 L 4.8 10.2 L 7 15 L 8.6 14.3 L 6.4 9.5 L 10.5 9.5 Z" 
+              fill="#ff5b35" 
+              opacity="0.35"/>
+        <circle cx="1.5" cy="1.5" r="1.2" fill="#ffffff"/>
+      </svg>
+    </div>
+    <div class="cursor-ring" id="cursorRing">
+      <span class="cursor-label" id="cursorLabel"></span>
+    </div>
   </div>
   <div class="selection-telemetry" id="selectionTelemetry" aria-hidden="true">
     <span class="sel-tag">DATA // CIPHER</span>

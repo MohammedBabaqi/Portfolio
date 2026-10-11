@@ -2511,14 +2511,14 @@ button { font: inherit; }
   color: #8fa5af;
 }
 
-/* Strictly hide custom pointer by default (phones, tablets, iPads, touchscreens) */
-.apple-pointer {
+/* Strictly hide custom cursor by default (phones, tablets, iPads, touchscreens) */
+.custom-cursor {
   display: none;
 }
 
 /* ONLY enable and display on desktop with fine pointer & hover */
 @media (hover: hover) and (pointer: fine) {
-  /* Complete elimination of the default OS mouse pointer arrow/hand when custom pointer is active */
+  /* Complete elimination of the default OS mouse pointer arrow/hand when custom cursor is active */
   html.has-custom-cursor,
   html.has-custom-cursor body,
   html.has-custom-cursor *,
@@ -2534,72 +2534,167 @@ button { font: inherit; }
     cursor: none !important;
   }
 
-  .apple-pointer {
+  .custom-cursor {
     display: block;
     position: fixed;
     top: 0; left: 0;
     width: 0; height: 0;
     pointer-events: none;
     z-index: 1000000;
+  }
+
+  /* 1. THE DOT (The Main Pointer - Glued 1:1 to hardware cursor) */
+  .cursor-dot {
+    position: fixed;
+    top: 0; left: 0;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--orange);
+    box-shadow: 0 0 8px rgba(255, 91, 53, 0.95), 0 0 2px #fff;
+    pointer-events: none;
     will-change: transform;
     opacity: 0;
-    transition: opacity .15s ease;
+    transition: background .18s, opacity .15s, box-shadow .18s;
+    z-index: 1000001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .apple-pointer.is-active {
+
+  /* Mini iOS Arrow Pointer SVG (active only on button/link hover) */
+  .ios-pointer-icon {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 14px;
+    height: 18px;
+    opacity: 0;
+    transform: scale(0.4);
+    transform-origin: 1px 1px;
+    pointer-events: none;
+    transition: opacity .18s ease, transform .18s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* 2. THE CIRCLE (The Accessory Follower) */
+  .cursor-ring {
+    position: fixed;
+    top: 0; left: 0;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(15, 36, 48, 0.45);
+    background: rgba(15, 36, 48, 0.04);
+    pointer-events: none;
+    will-change: transform;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width .22s cubic-bezier(0.16, 1, 0.3, 1), 
+                height .22s cubic-bezier(0.16, 1, 0.3, 1), 
+                border-radius .22s ease, 
+                border-color .2s, 
+                background .2s, 
+                box-shadow .2s, 
+                opacity .15s;
+    z-index: 1000000;
+  }
+
+  .cursor-label {
+    font: 700 .54rem/1 var(--mono);
+    color: #ffffff;
+    letter-spacing: .08em;
+    opacity: 0;
+    transform: scale(0.7);
+    transition: opacity .18s, transform .18s;
+    text-transform: uppercase;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  /* Active visible state when mouse moves inside window */
+  .custom-cursor.is-active .cursor-dot,
+  .custom-cursor.is-active .cursor-ring {
     opacity: 1;
   }
 
-  /* Apple Precision Inner Center Dot */
-  .pointer-dot {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 7px;
-    height: 7px;
-    margin: -3.5px 0 0 -3.5px;
+  /* ══════ STATE A: BUTTON / LINK HOVER (Dot turns into iOS Pointer, Ring acts as soft halo) ══════ */
+  .custom-cursor.is-hovering .cursor-dot {
+    background: transparent;
+    box-shadow: none;
+  }
+  .custom-cursor.is-hovering .ios-pointer-icon {
+    opacity: 1;
+    transform: scale(1);
+    filter: drop-shadow(0 2px 8px rgba(255, 91, 53, 0.5));
+  }
+  .custom-cursor.is-hovering .cursor-ring {
+    width: 34px;
+    height: 34px;
+    border-color: rgba(255, 91, 53, 0.7);
+    background: rgba(255, 91, 53, 0.12);
+    box-shadow: 0 0 14px rgba(255, 91, 53, 0.28);
+  }
+
+  /* ══════ STATE B: PROJECT / CARD HOVER (Ring turns into big circular "VIEW" badge) ══════ */
+  .custom-cursor.is-view .cursor-ring {
+    width: 62px;
+    height: 62px;
     border-radius: 50%;
-    background: #ff5b35;
-    box-shadow: 0 0 8px rgba(255, 91, 53, 0.95), 0 0 2px #ffffff;
-    pointer-events: none;
-    transition: transform .2s cubic-bezier(0.16, 1, 0.3, 1), opacity .18s ease;
+    background: rgba(15, 36, 48, 0.94);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 22px rgba(0, 0, 0, 0.42);
+  }
+  .custom-cursor.is-view .cursor-dot {
+    opacity: 0.5;
+    width: 4px;
+    height: 4px;
+    background: var(--orange);
+    box-shadow: 0 0 6px var(--orange);
+  }
+  .custom-cursor.is-view .cursor-label {
+    opacity: 1;
+    transform: scale(1);
   }
 
-  /* Apple Outer Glass Fluid Ring */
-  .pointer-ring {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 22px;
-    height: 22px;
-    margin: -11px 0 0 -11px;
-    border-radius: 50%;
-    border: 1.5px solid rgba(15, 36, 48, 0.5);
-    background: rgba(15, 36, 48, 0.08);
-    pointer-events: none;
-    transition: transform .24s cubic-bezier(0.16, 1, 0.3, 1), 
-                border-color .2s ease, 
-                background .2s ease, 
-                box-shadow .2s ease;
+  /* ══════ STATE C: CODE / TERMINAL HOVER (Ring turns into square "EXEC" badge) ══════ */
+  .custom-cursor.is-code .cursor-ring {
+    width: 42px;
+    height: 42px;
+    border-radius: 6px;
+    border-color: #5ed6a2;
+    background: rgba(94, 214, 162, 0.16);
+    box-shadow: 0 0 12px rgba(94, 214, 162, 0.25);
+  }
+  .custom-cursor.is-code .cursor-dot {
+    background: #5ed6a2;
+    box-shadow: 0 0 8px #5ed6a2, 0 0 2px #fff;
+  }
+  .custom-cursor.is-code .cursor-label {
+    opacity: 1;
+    color: #5ed6a2;
+    transform: scale(1);
   }
 
-  /* Hover State: Signature Apple Fluid Glass Expansion */
-  .apple-pointer.is-hovering .pointer-dot {
-    opacity: 0;
-    transform: scale(0.2);
+  /* ══════ STATE D: TEXT SELECTING ══════ */
+  .custom-cursor.is-selecting .cursor-ring {
+    width: 24px;
+    height: 24px;
+    border-color: #5ed6a2;
+    background: rgba(94, 214, 162, 0.15);
   }
-  .apple-pointer.is-hovering .pointer-ring {
-    transform: scale(1.85); /* Smoothly expands from 22px to ~40px */
-    border-color: #ff5b35;
-    background: rgba(255, 91, 53, 0.16);
-    box-shadow: 0 0 16px rgba(255, 91, 53, 0.35), inset 0 0 6px rgba(255, 91, 53, 0.15);
+  .custom-cursor.is-selecting .cursor-dot {
+    scale: 1.15;
+    background: var(--orange);
+    box-shadow: 0 0 10px var(--orange), 0 0 2px #fff;
   }
 
-  /* Click Down: Tactile Apple Spring Compression */
-  .apple-pointer.is-down .pointer-ring {
-    transform: scale(1.35);
+  /* ══════ CLICK DOWN TACTILE FEEDBACK ══════ */
+  .custom-cursor.is-down .cursor-ring {
+    scale: 0.82;
+    border-color: var(--orange);
   }
-  .apple-pointer.is-down:not(.is-hovering) .pointer-dot {
-    transform: scale(0.75);
+  .custom-cursor.is-down .cursor-dot {
+    scale: 0.85;
   }
 
   .selection-telemetry {
