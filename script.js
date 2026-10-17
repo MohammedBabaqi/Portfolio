@@ -675,7 +675,7 @@
       mouseX = e.clientX;
       mouseY = e.clientY;
 
-      if (!isCursorActive) {
+      if (!isCursorActive || !cursorEl.classList.contains("is-active")) {
         isCursorActive = true;
         cursorEl.classList.add("is-active");
         document.documentElement.classList.add("has-custom-cursor");
@@ -742,12 +742,22 @@
 
     document.addEventListener("mouseenter", function (e) {
       if (!isTouchUser && e.pointerType !== "touch") {
+        isCursorActive = true;
         cursorEl.classList.add("is-active");
         document.documentElement.classList.add("has-custom-cursor");
+        if (e.clientX && e.clientY) {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          ringX = mouseX;
+          ringY = mouseY;
+          cursorDot.style.transform = "translate3d(" + mouseX + "px, " + mouseY + "px, 0) translate(-50%, -50%)";
+          updateCursorTarget(e.target);
+        }
       }
     });
 
     window.addEventListener("blur", function () {
+      isCursorActive = false;
       document.documentElement.classList.remove("has-custom-cursor");
       cursorEl.classList.remove("is-active", "is-hovering", "is-view", "is-code", "is-selecting");
     });
@@ -755,6 +765,18 @@
     window.addEventListener("focus", function () {
       if (!isTouchUser && isFinePointerDevice) {
         document.documentElement.classList.add("has-custom-cursor");
+        isCursorActive = false; // Re-arm cursor so next mouse movement activates immediately
+      }
+    });
+
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) {
+        isCursorActive = false;
+        document.documentElement.classList.remove("has-custom-cursor");
+        cursorEl.classList.remove("is-active", "is-hovering", "is-view", "is-code", "is-selecting");
+      } else if (!isTouchUser && isFinePointerDevice) {
+        document.documentElement.classList.add("has-custom-cursor");
+        isCursorActive = false; // Re-arm cursor on tab return
       }
     });
 
