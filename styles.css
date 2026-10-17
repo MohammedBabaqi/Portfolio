@@ -32,6 +32,7 @@ html {
   scroll-behavior: smooth;
   scrollbar-color: var(--orange) var(--paper-2);
   scrollbar-width: thin;
+  overflow-x: clip;
 }
 
 body {
@@ -2846,8 +2847,14 @@ button { font: inherit; }
   }
   .hero {
     min-height: auto;
-    padding-top: 6.2rem;
+    padding-top: 5.6rem;
     padding-bottom: 1.5rem;
+    gap: 2.4rem;
+  }
+  .hero-visuals {
+    width: 100%;
+    max-width: 100%;
+    gap: 1rem;
   }
   .hero-title {
     font-size: clamp(2.8rem, 13vw, 4.6rem);
@@ -2874,6 +2881,86 @@ button { font: inherit; }
     flex-wrap: wrap;
     gap: 1.2rem;
   }
+  .engineer-card {
+    grid-template-columns: 76px 1fr;
+    gap: .85rem;
+    padding: .85rem 1rem;
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .engineer-card:hover {
+    box-shadow: 6px 6px 0 var(--orange);
+    transform: none;
+  }
+  .engineer-photo {
+    width: 76px;
+    height: 76px;
+  }
+  .engineer-details {
+    min-width: 0;
+  }
+  .engineer-title-row {
+    flex-wrap: wrap;
+    gap: .25rem .5rem;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .engineer-name {
+    font-size: 1.15rem;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+  .engineer-badge {
+    font-size: .52rem;
+    padding: .2rem .45rem;
+    flex-shrink: 0;
+  }
+  .engineer-role {
+    font-size: .68rem;
+    line-height: 1.25;
+  }
+  .engineer-status {
+    font-size: .6rem;
+    line-height: 1.3;
+    flex-wrap: wrap;
+  }
+  .engineer-links {
+    flex-wrap: wrap;
+    gap: .35rem;
+    margin-top: .4rem;
+    padding-top: .5rem;
+  }
+  .eng-link {
+    font-size: .56rem;
+    padding: .3rem .5rem;
+  }
+  .hero-console {
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .hero-console:hover {
+    box-shadow: 6px 6px 0 var(--orange);
+    transform: none;
+  }
+  .console-bar {
+    padding: .65rem .85rem;
+    font-size: .58rem;
+    flex-wrap: wrap;
+    gap: .4rem;
+  }
+  .pipeline-nexus {
+    padding: .85rem .75rem;
+  }
+  .scope-monitor {
+    margin-top: .65rem;
+    padding: .65rem .75rem;
+  }
+  .scope-monitor-head {
+    font-size: .52rem;
+    flex-wrap: wrap;
+    gap: .3rem;
+  }
+  .scope-wave-svg {
+    height: 38px;
+  }
   .console-stages {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -2884,22 +2971,9 @@ button { font: inherit; }
   .stage-item:nth-child(2) {
     border-bottom: 1px solid var(--line);
   }
-  .engineer-card {
-    grid-template-columns: 84px 1fr;
-    gap: 1rem;
-    padding: 1rem 1.15rem;
-  }
-  .engineer-photo {
-    width: 84px;
-    height: 84px;
-  }
-  .engineer-links {
-    flex-wrap: wrap;
-    gap: .35rem;
-  }
-  .eng-link {
-    font-size: .56rem;
-    padding: .3rem .5rem;
+  .stage-item {
+    padding: .6rem .45rem;
+    font-size: .54rem;
   }
   .hero-foot {
     margin-top: 1rem;
@@ -2911,12 +2985,51 @@ button { font: inherit; }
     padding-block: 4.5rem;
   }
   .flow-map {
-    min-height: 18rem;
+    min-height: 12.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .source {
+    width: 2.75rem;
+    height: 1.65rem;
+    font-size: .56rem;
+    border-width: 1px;
+  }
+  .flow-map .hub {
+    width: 3.4rem;
+    font-size: .62rem;
+    border-width: 1.2px;
+    box-shadow: 0 0 0 5px rgba(17, 103, 216, .14);
+  }
+  .flow-map .hub::before {
+    inset: -8px;
+    border-width: 1px;
+  }
+  .capability:hover .flow-map .hub {
+    transform: translate(-50%, -50%) scale(1.04);
+    box-shadow: 0 0 0 7px rgba(17, 103, 216, .2), 0 0 14px rgba(17, 103, 216, 0.25);
+  }
+  .flow-map .destination {
+    width: 3.8rem;
+    height: 5.2rem;
+    font-size: .62rem;
+    border-radius: 8px;
+    border-width: 1.2px;
+  }
+  .flow-map .destination::before,
+  .flow-map .destination::after {
+    height: .85rem;
+  }
+  .flow-metric-badge {
+    font-size: .5rem;
+    padding: .2rem .45rem;
+    bottom: .45rem;
+    right: .45rem;
+    gap: .3rem;
   }
   .capability-schema,
   .monitor,
   .agent-console {
-    min-height: 15rem;
+    min-height: 14rem;
   }
   .project-card,
   .project-card-flagship {
@@ -3003,9 +3116,16 @@ button { font: inherit; }
     padding: .35rem .55rem;
     min-height: 36px;
   }
+  .hero {
+    gap: 1.8rem;
+  }
   .hero-actions {
     align-items: stretch;
     flex-direction: column;
+  }
+  .hero-actions .text-link {
+    text-align: center;
+    margin-top: .2rem;
   }
   .button {
     width: 100%;
@@ -3014,6 +3134,90 @@ button { font: inherit; }
   .hero-socials {
     flex-wrap: wrap;
     gap: .4rem;
+  }
+  .engineer-card {
+    grid-template-columns: 62px 1fr;
+    gap: .7rem;
+    padding: .75rem .8rem;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .engineer-card:hover {
+    box-shadow: 4px 4px 0 var(--orange);
+  }
+  .engineer-photo {
+    width: 62px;
+    height: 62px;
+  }
+  .engineer-name {
+    font-size: 1.05rem;
+  }
+  .engineer-role {
+    font-size: .62rem;
+  }
+  .engineer-status {
+    font-size: .56rem;
+  }
+  .eng-link {
+    font-size: .52rem;
+    padding: .25rem .45rem;
+    gap: .25rem;
+  }
+  .hero-console {
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .hero-console:hover {
+    box-shadow: 4px 4px 0 var(--orange);
+  }
+  .console-bar {
+    padding: .55rem .7rem;
+    font-size: .54rem;
+  }
+  .pipeline-nexus {
+    padding: .65rem .6rem;
+  }
+  .scope-monitor {
+    margin-top: .5rem;
+    padding: .55rem .65rem;
+  }
+  .scope-wave-svg {
+    height: 32px;
+  }
+  .stage-item {
+    padding: .5rem .35rem;
+    font-size: .5rem;
+  }
+  .flow-map {
+    min-height: 11rem;
+    margin-bottom: 1rem;
+  }
+  .source {
+    width: 2.35rem;
+    height: 1.45rem;
+    font-size: .48rem;
+  }
+  .flow-map .hub {
+    width: 2.75rem;
+    font-size: .54rem;
+    box-shadow: 0 0 0 4px rgba(17, 103, 216, .14);
+  }
+  .flow-map .hub::before {
+    inset: -6px;
+  }
+  .flow-map .destination {
+    width: 3.1rem;
+    height: 4.3rem;
+    font-size: .54rem;
+    border-radius: 6px;
+  }
+  .flow-map .destination::before,
+  .flow-map .destination::after {
+    height: .7rem;
+  }
+  .flow-metric-badge {
+    font-size: .44rem;
+    padding: .15rem .38rem;
+    bottom: .35rem;
+    right: .35rem;
   }
   .method-list li {
     gap: .75rem;
