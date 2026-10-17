@@ -239,6 +239,8 @@
     var width = 0, height = 0, ratio = 1;
     var nodes = [];
     var frame = 0;
+    var isCanvasVisible = true;
+    var animFrameId = null;
 
     function resizeField() {
       ratio = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -259,6 +261,10 @@
     }
 
     function drawField() {
+      if (!isCanvasVisible) {
+        animFrameId = null;
+        return;
+      }
       context.clearRect(0, 0, width, height);
       frame += .012;
       for (var i = 0; i < nodes.length; i++) {
@@ -274,16 +280,30 @@
         context.fillStyle = "rgba(17, 103, 216, " + Math.max(0, alpha).toFixed(3) + ")";
         context.fill();
       }
-      window.requestAnimationFrame(drawField);
+      animFrameId = window.requestAnimationFrame(drawField);
     }
 
     resizeField();
     drawField();
+
     var resizeTimer;
     window.addEventListener("resize", function () {
       window.clearTimeout(resizeTimer);
       resizeTimer = window.setTimeout(resizeField, 120);
     });
+
+    var heroSection = document.getElementById("top");
+    if (heroSection && "IntersectionObserver" in window) {
+      var heroObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          isCanvasVisible = entry.isIntersecting;
+          if (isCanvasVisible && !animFrameId) {
+            drawField();
+          }
+        });
+      }, { threshold: 0.05 });
+      heroObserver.observe(heroSection);
+    }
   }
 
   /* ═══════════════════════ AI AGENT STEP CYCLE & INTERACTION ═══════════════════════ */
@@ -524,47 +544,53 @@
           });
         }
       });
+    }
+  }
 
   /* ═══════════════════════ MODELING SCHEMA PROGRESS BARS ANIMATION ═══════════════════════ */
   var schemaBars = Array.from(document.querySelectorAll(".schema-bar-fill"));
   var schemaTrack = document.querySelector(".capability-schema");
-  if (schemaTrack && schemaBars.length && !reducedMotion) {
-    schemaBars.forEach(function (bar) {
-      bar.style.width = "0%";
-    });
-
-    function animateSchemaBars() {
-      schemaBars.forEach(function (bar, idx) {
-        var target = bar.getAttribute("data-width") || "100%";
-        window.setTimeout(function () {
-          bar.style.width = target;
-        }, idx * 160);
+  if (schemaTrack && schemaBars.length) {
+    if (reducedMotion) {
+      schemaBars.forEach(function (bar) {
+        bar.style.width = bar.getAttribute("data-width") || "100%";
       });
-    }
-
-    if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
-      ScrollTrigger.create({
-        trigger: schemaTrack,
-        start: "top 85%",
-        once: true,
-        onEnter: function () {
-          animateSchemaBars();
-        }
+    } else {
+      schemaBars.forEach(function (bar) {
+        bar.style.width = "0%";
       });
-    } else if ("IntersectionObserver" in window) {
-      var schemaObserver = new IntersectionObserver(function (entries, observer) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
+
+      function animateSchemaBars() {
+        schemaBars.forEach(function (bar, idx) {
+          var target = bar.getAttribute("data-width") || "100%";
+          window.setTimeout(function () {
+            bar.style.width = target;
+          }, idx * 160);
+        });
+      }
+
+      if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.create({
+          trigger: schemaTrack,
+          start: "top 85%",
+          once: true,
+          onEnter: function () {
             animateSchemaBars();
-            observer.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.2 });
-      schemaObserver.observe(schemaTrack);
-    } else {
-      animateSchemaBars();
-    }
-  }
+      } else if ("IntersectionObserver" in window) {
+        var schemaObserver = new IntersectionObserver(function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              animateSchemaBars();
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.2 });
+        schemaObserver.observe(schemaTrack);
+      } else {
+        animateSchemaBars();
+      }
     }
   }
 
@@ -593,40 +619,52 @@
     var mouseX = -100, mouseY = -100;
     var ringX = -100, ringY = -100;
     var isCursorActive = false;
+    var isPointerSelecting = false;
 
     // Immediately activate custom cursor class so default OS pointer is hidden on desktop
     document.documentElement.classList.add("has-custom-cursor");
 
     function updateCursorTarget(target) {
       if (!target || !(target instanceof Element) || isTouchUser) {
-        cursorEl.classList.remove("is-hovering", "is-view", "is-code");
+        cursorEl.classList.remove("is-hovering", "is-view", "is-code", "is-selecting");
         if (cursorLabel) cursorLabel.textContent = "";
         return;
       }
 
-      // 1. Projects / Portraits / Windows -> Expanding Circular "VIEW" Badge
+      // Priority 1: Interactive buttons, links, controls, tabs, copy buttons
+      // (Takes precedence even if nested inside project cards, terminal windows, or headers)
+      var interactiveEl = target.closest(
+        "a, button, [role='button'], input, textarea, select, label, " +
+        ".tag-list li, .schema-pill, .source, .hub, .destination, .method-list li, " +
+        "[data-copy-email], .brand, .brand-card-btn, .about-link-pill, .copy-button, " +
+        ".project-gh-link, .project-demo-link, .hero-metric, .eng-link"
+      );
+      if (interactiveEl) {
+        cursorEl.classList.add("is-hovering");
+        cursorEl.classList.remove("is-view", "is-code", "is-selecting");
+        if (cursorLabel) cursorLabel.textContent = "";
+        return;
+      }
+
+      // Priority 2: Project cards / Showcase containers / Portraits (Non-interactive body surfaces)
       if (target.closest(".project-card, .portrait, .archive-window-frame")) {
         cursorEl.classList.add("is-view");
-        cursorEl.classList.remove("is-hovering", "is-code");
+        cursorEl.classList.remove("is-hovering", "is-code", "is-selecting");
         if (cursorLabel) cursorLabel.textContent = "VIEW";
+        return;
       }
-      // 2. Code / Terminal / Monitor / Benchmarks -> Rounded Square "EXEC" Badge
-      else if (target.closest("code, pre, .terminal, .monitor, .agent-console")) {
+
+      // Priority 3: Code / Terminal / Monitor / Agent Console
+      if (target.closest("code, pre, .terminal, .monitor, .agent-console")) {
         cursorEl.classList.add("is-code");
-        cursorEl.classList.remove("is-hovering", "is-view");
+        cursorEl.classList.remove("is-hovering", "is-view", "is-selecting");
         if (cursorLabel) cursorLabel.textContent = "EXEC";
+        return;
       }
-      // 3. Interactive Buttons / Links / Interactive UI -> Sleek mini iOS Pointer
-      else if (target.closest("a, button, [role='button'], input, textarea, select, label, .tag-list li, .schema-pill, .source, .hub, .destination, .method-list li, [data-copy-email], .brand, .brand-card-btn, .about-link-pill, .copy-button")) {
-        cursorEl.classList.add("is-hovering");
-        cursorEl.classList.remove("is-view", "is-code");
-        if (cursorLabel) cursorLabel.textContent = "";
-      }
-      // 4. Neutral Canvas / Body / Static Elements -> Return to Standard Circle + Dot
-      else {
-        cursorEl.classList.remove("is-hovering", "is-view", "is-code");
-        if (cursorLabel) cursorLabel.textContent = "";
-      }
+
+      // Priority 4: Neutral canvas / Standard text / Background -> standard circle + dot
+      cursorEl.classList.remove("is-hovering", "is-view", "is-code", "is-selecting");
+      if (cursorLabel) cursorLabel.textContent = "";
     }
 
     function onPointerMove(e) {
@@ -645,37 +683,59 @@
         ringY = mouseY;
       }
 
-      // Hardware 1:1 Instantaneous Dot Tracking (Zero Lag, Tip anchored exactly at mouse coordinates)
+      // Hardware 1:1 Instantaneous Dot Tracking (Zero Lag, anchored exactly at mouse coordinates)
       cursorDot.style.transform = "translate3d(" + mouseX + "px, " + mouseY + "px, 0) translate(-50%, -50%)";
 
-      // Real-time evaluation on every pixel of movement: guarantees instant entry AND instant return!
-      updateCursorTarget(e.target);
+      // If user is actively mouse-down dragging text, switch to text-select mode
+      if (isPointerSelecting && window.getSelection && window.getSelection().toString().trim().length > 0) {
+        cursorEl.classList.add("is-selecting");
+        cursorEl.classList.remove("is-hovering", "is-view", "is-code");
+        if (cursorLabel) cursorLabel.textContent = "";
+      } else {
+        cursorEl.classList.remove("is-selecting");
+        updateCursorTarget(e.target);
+      }
     }
 
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-    window.addEventListener("mousemove", onPointerMove, { passive: true });
+    // Bind pointer movement: prefer modern PointerEvent
+    if ("PointerEvent" in window) {
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+    } else {
+      window.addEventListener("mousemove", onPointerMove, { passive: true });
+    }
 
     document.addEventListener("pointerdown", function (e) {
       if (isTouchUser || e.pointerType === "touch") {
         disableCustomCursor();
         return;
       }
+      if (!e.target.closest("a, button, [role='button'], input, textarea, select, .project-card, .brand")) {
+        isPointerSelecting = true;
+      } else {
+        isPointerSelecting = false;
+      }
       cursorEl.classList.add("is-down");
     });
 
     document.addEventListener("pointerup", function () {
-      cursorEl.classList.remove("is-down");
+      isPointerSelecting = false;
+      cursorEl.classList.remove("is-down", "is-selecting");
+      var elUnderCursor = document.elementFromPoint(mouseX, mouseY);
+      updateCursorTarget(elUnderCursor);
+      if (typeof updateSelectionHUD === "function") {
+        window.setTimeout(updateSelectionHUD, 60);
+      }
     });
 
     document.addEventListener("mouseleave", function () {
       isCursorActive = false;
-      cursorEl.classList.remove("is-active", "is-hovering", "is-view", "is-code");
+      cursorEl.classList.remove("is-active", "is-hovering", "is-view", "is-code", "is-selecting");
       document.documentElement.classList.remove("has-custom-cursor");
     });
 
     document.addEventListener("pointerout", function (e) {
       if (!e.relatedTarget) {
-        cursorEl.classList.remove("is-hovering", "is-view", "is-code");
+        cursorEl.classList.remove("is-hovering", "is-view", "is-code", "is-selecting");
         if (cursorLabel) cursorLabel.textContent = "";
       }
     });
@@ -689,7 +749,7 @@
 
     window.addEventListener("blur", function () {
       document.documentElement.classList.remove("has-custom-cursor");
-      cursorEl.classList.remove("is-active", "is-hovering", "is-view", "is-code");
+      cursorEl.classList.remove("is-active", "is-hovering", "is-view", "is-code", "is-selecting");
     });
 
     window.addEventListener("focus", function () {
@@ -746,29 +806,17 @@
       selectionTelemetry.classList.remove("is-active");
     }
 
-    document.addEventListener("selectionchange", function () {
-      var sel = window.getSelection();
-      var hasText = sel && sel.toString().trim().length > 0;
-      if (cursorEl) {
-        if (hasText) {
-          cursorEl.classList.add("is-selecting");
-        } else {
-          cursorEl.classList.remove("is-selecting");
-        }
-      }
-      updateSelectionHUD();
-    });
-
-    // Immediately dismiss selection HUD on scroll so it never lingers or gets stuck
+    // Scroll listener: dismiss selection HUD and immediately re-evaluate cursor target under mouse coordinates
     window.addEventListener("scroll", function () {
       if (selectionTelemetry && selectionTelemetry.classList.contains("is-active")) {
         selectionTelemetry.classList.remove("is-active");
       }
+      if (cursorEl) {
+        cursorEl.classList.remove("is-selecting");
+        var elUnderCursor = document.elementFromPoint(mouseX, mouseY);
+        updateCursorTarget(elUnderCursor);
+      }
     }, { passive: true });
-
-    document.addEventListener("pointerup", function () {
-      window.setTimeout(updateSelectionHUD, 60);
-    });
 
     document.addEventListener("pointerdown", function (e) {
       if (selectionTelemetry && !e.target.closest("#selectionTelemetry")) {
@@ -782,7 +830,7 @@
 
   /* ═══════════════════════ CIPHER TEXT SCRAMBLE (MOUSE OVER NUMBERS & STUFF) ═══════════════════════ */
   var scrambleTargets = Array.from(document.querySelectorAll(
-    ".card-index, .project-badge, .eyebrow, .tag-list li, .schema-pill, .brand-card-btn, .about-link-pill, .method-code"
+    ".card-index, .project-badge, .eyebrow, .tag-list li, .schema-pill, .method-code"
   ));
 
   var cipherChars = "01234567890123456789#%&*+=-_/<>";

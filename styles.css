@@ -2520,17 +2520,7 @@ button { font: inherit; }
 @media (hover: hover) and (pointer: fine) {
   /* Complete elimination of the default OS mouse pointer arrow/hand when custom cursor is active */
   html.has-custom-cursor,
-  html.has-custom-cursor body,
-  html.has-custom-cursor *,
-  html.has-custom-cursor *::before,
-  html.has-custom-cursor *::after,
-  html.has-custom-cursor a,
-  html.has-custom-cursor button,
-  html.has-custom-cursor [role="button"],
-  html.has-custom-cursor input,
-  html.has-custom-cursor select,
-  html.has-custom-cursor textarea,
-  html.has-custom-cursor label {
+  html.has-custom-cursor * {
     cursor: none !important;
   }
 
@@ -2554,7 +2544,7 @@ button { font: inherit; }
     pointer-events: none;
     will-change: transform;
     opacity: 0;
-    transition: background .18s, opacity .15s, box-shadow .18s;
+    transition: background .14s ease, opacity .12s ease, box-shadow .14s ease;
     z-index: 1000001;
     display: flex;
     align-items: center;
@@ -2572,7 +2562,7 @@ button { font: inherit; }
     transform: scale(0.4);
     transform-origin: 1px 1px;
     pointer-events: none;
-    transition: opacity .18s ease, transform .18s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity .16s ease, transform .16s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   /* 2. THE CIRCLE (The Accessory Follower) */
@@ -2617,14 +2607,15 @@ button { font: inherit; }
     opacity: 1;
   }
 
-  /* ══════ STATE A: BUTTON / LINK HOVER (Dot turns into iOS Pointer, Ring acts as soft halo) ══════ */
+  /* ══════ STATE A: BUTTON / LINK HOVER (Dot cleanly morphs to iOS pointer, Ring becomes soft halo) ══════ */
   .custom-cursor.is-hovering .cursor-dot {
-    background: transparent;
-    box-shadow: none;
+    background: transparent !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
   }
   .custom-cursor.is-hovering .ios-pointer-icon {
-    opacity: 1;
-    transform: scale(1);
+    opacity: 1 !important;
+    transform: scale(1) !important;
     filter: drop-shadow(0 2px 8px rgba(255, 91, 53, 0.5));
   }
   .custom-cursor.is-hovering .cursor-ring {
@@ -2634,8 +2625,11 @@ button { font: inherit; }
     background: rgba(255, 91, 53, 0.12);
     box-shadow: 0 0 14px rgba(255, 91, 53, 0.28);
   }
+  .custom-cursor.is-hovering .cursor-label {
+    opacity: 0 !important;
+  }
 
-  /* ══════ STATE B: PROJECT / CARD HOVER (Ring turns into big circular "VIEW" badge) ══════ */
+  /* ══════ STATE B: PROJECT / CARD HOVER (Dot is REMOVED, Ring turns into circular "VIEW" badge) ══════ */
   .custom-cursor.is-view .cursor-ring {
     width: 62px;
     height: 62px;
@@ -2645,56 +2639,75 @@ button { font: inherit; }
     box-shadow: 0 4px 22px rgba(0, 0, 0, 0.42);
   }
   .custom-cursor.is-view .cursor-dot {
-    opacity: 0.5;
-    width: 4px;
-    height: 4px;
-    background: var(--orange);
-    box-shadow: 0 0 6px var(--orange);
+    opacity: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    pointer-events: none;
+  }
+  .custom-cursor.is-view .ios-pointer-icon {
+    opacity: 0 !important;
+    transform: scale(0.3) !important;
   }
   .custom-cursor.is-view .cursor-label {
-    opacity: 1;
-    transform: scale(1);
+    opacity: 1 !important;
+    transform: scale(1) !important;
   }
 
-  /* ══════ STATE C: CODE / TERMINAL HOVER (Ring turns into square "EXEC" badge) ══════ */
+  /* ══════ STATE C: CODE / TERMINAL HOVER (Dot is REMOVED, Ring turns into square "EXEC" badge) ══════ */
   .custom-cursor.is-code .cursor-ring {
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     border-radius: 6px;
     border-color: #5ed6a2;
-    background: rgba(94, 214, 162, 0.16);
-    box-shadow: 0 0 12px rgba(94, 214, 162, 0.25);
+    background: rgba(15, 36, 48, 0.94);
+    box-shadow: 0 0 14px rgba(94, 214, 162, 0.35);
   }
   .custom-cursor.is-code .cursor-dot {
-    background: #5ed6a2;
-    box-shadow: 0 0 8px #5ed6a2, 0 0 2px #fff;
+    opacity: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    pointer-events: none;
+  }
+  .custom-cursor.is-code .ios-pointer-icon {
+    opacity: 0 !important;
+    transform: scale(0.3) !important;
   }
   .custom-cursor.is-code .cursor-label {
-    opacity: 1;
-    color: #5ed6a2;
-    transform: scale(1);
+    opacity: 1 !important;
+    color: #5ed6a2 !important;
+    transform: scale(1) !important;
   }
 
-  /* ══════ STATE D: TEXT SELECTING ══════ */
-  .custom-cursor.is-selecting .cursor-ring {
-    width: 24px;
-    height: 24px;
-    border-color: #5ed6a2;
-    background: rgba(94, 214, 162, 0.15);
-  }
+  /* ══════ STATE D: TEXT SELECTING (Dot is REMOVED, Ring turns into sleek vertical selection beam) ══════ */
   .custom-cursor.is-selecting .cursor-dot {
-    scale: 1.15;
+    opacity: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    pointer-events: none;
+  }
+  .custom-cursor.is-selecting .ios-pointer-icon {
+    opacity: 0 !important;
+    transform: scale(0.3) !important;
+  }
+  .custom-cursor.is-selecting .cursor-ring {
+    width: 4px;
+    height: 24px;
+    border-radius: 2px;
+    border: none;
     background: var(--orange);
-    box-shadow: 0 0 10px var(--orange), 0 0 2px #fff;
+    box-shadow: 0 0 10px rgba(255, 91, 53, 0.85);
+  }
+  .custom-cursor.is-selecting .cursor-label {
+    opacity: 0 !important;
   }
 
   /* ══════ CLICK DOWN TACTILE FEEDBACK ══════ */
   .custom-cursor.is-down .cursor-ring {
-    scale: 0.82;
+    transform: scale(0.85);
     border-color: var(--orange);
   }
   .custom-cursor.is-down .cursor-dot {
-    scale: 0.85;
+    transform: scale(0.85);
   }
 
   .selection-telemetry {
