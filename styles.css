@@ -797,22 +797,26 @@ button { font: inherit; }
 .hero-visuals {
   position: relative; z-index: 2;
   display: flex; flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
+  align-self: start;
+  width: 100%;
 }
 
 /* Verified Engineer Identity Card (Top of Hero Visual) */
 .engineer-card {
+  width: 100%;
+  box-sizing: border-box;
   display: grid; grid-template-columns: 110px 1fr;
   align-items: center; gap: 1.35rem;
   padding: 1.35rem 1.6rem;
   border: 1.5px solid var(--ink);
   background: var(--white);
-  box-shadow: 12px 12px 0 var(--ink);
+  box-shadow: 10px 10px 0 var(--ink);
   transition: transform .3s var(--ease), box-shadow .3s var(--ease);
 }
 .engineer-card:hover {
   transform: translateY(-3px);
-  box-shadow: 14px 14px 0 var(--orange);
+  box-shadow: 12px 12px 0 var(--orange);
 }
 
 .engineer-photo {
@@ -893,20 +897,22 @@ button { font: inherit; }
 
 /* Engineering Command Console */
 .hero-console {
+  width: 100%;
+  box-sizing: border-box;
   position: relative;
   border: 1.5px solid var(--ink);
   background: var(--white);
-  box-shadow: 12px 12px 0 var(--ink);
+  box-shadow: 10px 10px 0 var(--ink);
   transition: transform .3s var(--ease), box-shadow .3s var(--ease);
 }
 .hero-console:hover {
   transform: translateY(-3px);
-  box-shadow: 14px 14px 0 var(--orange);
+  box-shadow: 12px 12px 0 var(--orange);
 }
 
 .console-bar {
   display: flex; justify-content: space-between; align-items: center;
-  padding: .65rem 1.1rem;
+  padding: .85rem 1.1rem;
   border-bottom: 1.5px solid var(--ink);
   background: #f1f6f7;
   font: 600 .62rem/1.3 var(--mono);
@@ -931,15 +937,43 @@ button { font: inherit; }
 
 /* 2D Data Flow Pipeline Visual */
 .pipeline-nexus {
-  padding: .85rem 1.1rem;
+  padding: 1.25rem 1.1rem;
   background: linear-gradient(180deg, #fbfdfd 0%, #f4f8f9 100%);
   position: relative; overflow: hidden;
 }
 
 .pipeline-svg {
   width: 100%; height: auto;
-  max-height: 96px;
   display: block; overflow: visible;
+}
+
+/* Signal Monitor & Waveform */
+.scope-monitor {
+  position: relative;
+  margin-top: .9rem; padding: .85rem 1rem;
+  background: #091720; border: 1.5px solid var(--ink);
+  color: var(--white);
+}
+.scope-monitor-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: .6rem;
+  font: 500 .58rem/1 var(--mono); color: #8fa5af;
+  letter-spacing: .08em; text-transform: uppercase;
+}
+.scope-monitor-head b { color: #5ed6a2; }
+.scope-wave-svg { width: 100%; height: 54px; display: block; overflow: visible; }
+.wave-grid line { stroke: rgba(255,255,255,.07); stroke-dasharray: 2 4; }
+.wave-path {
+  fill: none; stroke: url(#waveGradient);
+  stroke-width: 2; vector-effect: non-scaling-stroke;
+}
+.wave-pulse-dot {
+  fill: var(--orange);
+  animation: pulse-dot 1.8s ease-in-out infinite alternate;
+}
+@keyframes pulse-dot {
+  from { r: 3.5; opacity: .7; }
+  to { r: 6.5; opacity: 1; filter: drop-shadow(0 0 6px var(--orange)); }
 }
 
 .console-stages {
@@ -948,9 +982,9 @@ button { font: inherit; }
   background: #edf3f4;
 }
 .stage-item {
-  padding: .5rem .55rem;
+  padding: .75rem .6rem;
   border-right: 1px solid var(--line);
-  font: 600 .58rem/1.3 var(--mono);
+  font: 500 .58rem/1.3 var(--mono);
   text-transform: uppercase; color: var(--ink);
   text-align: center;
 }
