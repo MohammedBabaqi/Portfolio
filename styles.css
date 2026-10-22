@@ -1150,23 +1150,26 @@ button { font: inherit; }
 }
 .flow-map span {
   position: absolute; display: grid; place-items: center;
-  z-index: 2; border: 1.5px solid var(--ink);
+  z-index: 3; border: 1.5px solid var(--ink);
   background: var(--white); font: 700 .68rem/1 var(--mono);
   box-shadow: 2px 2px 0 rgba(15,36,48,.08);
   transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
 }
-.source { width: 3.8rem; height: 2.2rem; border-radius: 100px; cursor: default; }
+.source {
+  width: 3.8rem; height: 2.2rem; border-radius: 100px; cursor: default;
+  transform: translateY(-50%);
+}
 .source:hover {
-  transform: scale(1.08);
+  transform: translateY(-50%) scale(1.08);
   border-color: var(--blue);
   box-shadow: 3px 3px 0 var(--blue);
 }
-.source-a { left: 4%; top: 12%; }
-.source-b { left: 6%; top: 46%; }
-.source-c { left: 2%; top: 78%; }
+.source-a { left: 4%; top: 18%; }
+.source-b { left: 4%; top: 50%; }
+.source-c { left: 4%; top: 82%; }
 
 .flow-map .hub {
-  width: 5.8rem; aspect-ratio: 1; left: 44%; top: 46%;
+  width: 5.8rem; aspect-ratio: 1; left: 45%; top: 50%;
   transform: translate(-50%, -50%); border-radius: 50%;
   color: var(--white); background: var(--blue);
   border-color: var(--blue);
@@ -1191,7 +1194,7 @@ button { font: inherit; }
 }
 
 .flow-map .destination {
-  width: 6.2rem; height: 7.8rem; right: 4%; top: 46%;
+  width: 6.2rem; height: 7.8rem; right: 4%; top: 50%;
   transform: translateY(-50%); color: var(--white);
   background: var(--ink); border-radius: 12px;
   transition: transform .3s var(--ease), box-shadow .3s var(--ease);
@@ -1216,6 +1219,7 @@ button { font: inherit; }
 }
 .flow-path {
   fill: none; stroke: var(--line-strong); stroke-width: .7;
+  stroke-linecap: round; stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
   transition: stroke .3s var(--ease);
 }
@@ -1239,7 +1243,7 @@ button { font: inherit; }
 }
 
 .flow-metric-badge {
-  position: absolute; right: .75rem; bottom: .6rem; z-index: 2;
+  position: absolute; right: .75rem; bottom: .6rem; z-index: 4;
   font: 600 .58rem/1 var(--mono); color: var(--orange-dark);
   background: #fff3f0; padding: .32rem .65rem; border: 1px solid rgba(255,91,53,.3);
   border-radius: 4px; display: inline-flex; align-items: center; gap: .4rem;
