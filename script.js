@@ -10,31 +10,77 @@
   }
   updateHeader();
   window.addEventListener("scroll", updateHeader, { passive: true });
-  /* ═══════════════════════ CREATIVE BRAND LOGO CLICK & SCROLL ═══════════════════════ */
+  /* ═══════════════════════ BRAND LOGO DYNAMIC TYPEWRITER & SMOOTH SCROLL ═══════════════════════ */
   var brandLogo = document.getElementById("brandLogo");
-  if (brandLogo) {
+  var brandName = document.getElementById("brandName");
+  if (brandLogo && brandName) {
+    var idleText = "Babaqi";
+    var hoverText = "data eng";
+    var currentText = idleText;
+    var targetText = idleText;
+    var typewriterTimer = null;
+
+    function typewriterStep() {
+      if (currentText === targetText) {
+        typewriterTimer = null;
+        brandLogo.classList.toggle("is-typing", targetText !== idleText);
+        return;
+      }
+
+      brandLogo.classList.add("is-typing");
+
+      if (targetText.startsWith(currentText)) {
+        currentText += targetText.charAt(currentText.length);
+        brandName.textContent = currentText;
+        typewriterTimer = setTimeout(typewriterStep, 38);
+      } else {
+        currentText = currentText.slice(0, -1);
+        brandName.textContent = currentText || "\u00A0";
+        typewriterTimer = setTimeout(typewriterStep, 20);
+      }
+    }
+
+    function setTypewriterTarget(text) {
+      if (reducedMotion) {
+        brandName.textContent = text;
+        currentText = text;
+        targetText = text;
+        return;
+      }
+      targetText = text;
+      if (!typewriterTimer) {
+        typewriterStep();
+      }
+    }
+
+    brandLogo.addEventListener("mouseenter", function () {
+      setTypewriterTarget(hoverText);
+    });
+
+    brandLogo.addEventListener("mouseleave", function () {
+      setTypewriterTarget(idleText);
+    });
+
+    brandLogo.addEventListener("focus", function () {
+      setTypewriterTarget(hoverText);
+    });
+
+    brandLogo.addEventListener("blur", function () {
+      setTypewriterTarget(idleText);
+    });
+
+    // Clean click scroll without any bounce
     brandLogo.addEventListener("click", function (e) {
       e.preventDefault();
-      // Kinetic recoil and telemetry shockwave
-      brandLogo.classList.remove("is-launching");
-      void brandLogo.offsetWidth; // Force CSS reflow
-      brandLogo.classList.add("is-launching");
-
-      // Smooth kinetic scroll to the first section (Hero / top)
       var target = document.getElementById("top") || document.body;
       target.scrollIntoView({
         behavior: reducedMotion ? "auto" : "smooth",
         block: "start"
       });
 
-      // Clear any hash cleanly without page jump
       if (window.location.hash) {
         history.pushState(null, "", window.location.pathname + window.location.search);
       }
-
-      setTimeout(function () {
-        brandLogo.classList.remove("is-launching");
-      }, 550);
     });
   }
 

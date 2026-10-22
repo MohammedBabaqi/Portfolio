@@ -17,18 +17,21 @@
 
   <header class="site-header" data-header>
     <!-- Interactive Brand Logo & Identity Card -->
-    <!-- Minimalist Clean Wordmark Logo -->
+    <!-- Minimalist Wordmark Logo with Interactive Role Typewriter -->
     <div class="brand-wrapper">
-      <a href="#top" class="brand-logo" id="brandLogo" aria-label="Babaqi - Return to top">
-        <span class="brand-name">Babaqi</span>
-        <span class="brand-dot" aria-hidden="true"></span>
+      <a href="#top" class="brand-logo" id="brandLogo" aria-label="Mohammed Babaqi - Data Engineer">
+        <span class="brand-name" id="brandName">Babaqi</span>
+        <span class="brand-cursor" id="brandCursor" aria-hidden="true">_</span>
       </a>
     </div>
 
-    <!-- Minimal Data Route Navigation with First Section Link -->
+    <!-- Minimal Data Route Navigation with Special Home Link -->
     <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
       <span class="nav-slash" aria-hidden="true">/</span>
-      <a href="#top" class="nav-segment">home</a>
+      <a href="#top" class="nav-segment nav-segment--home" id="navHome">
+        <svg class="nav-home-icon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5L12 3l9 6.5V20a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 20V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
+        <span>home</span>
+      </a>
       <span class="nav-slash" aria-hidden="true">/</span>
       <a href="#systems" class="nav-segment">systems</a>
       <span class="nav-slash" aria-hidden="true">/</span>
@@ -72,9 +75,12 @@
     </div>
 
     <nav class="mobile-menu-nav">
-      <a href="#top" class="mobile-nav-link">
+      <a href="#top" class="mobile-nav-link mobile-nav-link--home">
         <span class="mobile-nav-num">/ 00</span>
-        <span class="mobile-nav-text">home</span>
+        <span class="mobile-nav-text">
+          <svg class="nav-home-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5L12 3l9 6.5V20a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 20V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
+          home
+        </span>
         <span class="mobile-nav-arrow" aria-hidden="true">→</span>
       </a>
       <a href="#systems" class="mobile-nav-link">
