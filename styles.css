@@ -2547,32 +2547,26 @@ button { font: inherit; }
   .cursor-dot {
     position: fixed;
     top: 0; left: 0;
-    width: 8px; height: 8px;
+    width: 7px; height: 7px;
     border-radius: 50%;
     background: var(--orange);
     box-shadow: 0 0 8px rgba(255, 91, 53, 0.95), 0 0 2px #fff;
     pointer-events: none;
     will-change: transform;
     opacity: 0;
-    transition: background .14s ease, opacity .12s ease, box-shadow .14s ease;
+    transition: background .14s ease, opacity .12s ease, box-shadow .14s ease, width .14s ease, height .14s ease;
     z-index: 1000001;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
-  /* Mini iOS Arrow Pointer SVG (active only on button/link hover) */
-  .ios-pointer-icon {
+  /* Arrow / Triangle Pointer Shape inside cursor-ring (transforms circle on button/link hover) */
+  .ring-pointer-arrow {
     position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 14px;
-    height: 18px;
+    width: 30px;
+    height: 30px;
     opacity: 0;
-    transform: scale(0.4);
-    transform-origin: 1px 1px;
+    transform: scale(0.3) rotate(-15deg);
     pointer-events: none;
-    transition: opacity .16s ease, transform .16s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity .18s ease, transform .22s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   /* 2. THE CIRCLE (The Accessory Follower) */
@@ -2617,23 +2611,27 @@ button { font: inherit; }
     opacity: 1;
   }
 
-  /* ══════ STATE A: BUTTON / LINK HOVER (Dot cleanly morphs to iOS pointer, Ring becomes soft halo) ══════ */
+  /* ══════ STATE A: BUTTON / LINK HOVER (Dot stays a dot, Circle transforms into Arrow / Triangle) ══════ */
   .custom-cursor.is-hovering .cursor-dot {
-    background: transparent !important;
-    box-shadow: none !important;
+    background: var(--orange) !important;
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 50% !important;
+    box-shadow: 0 0 10px rgba(255, 91, 53, 1), 0 0 3px #fff !important;
     opacity: 1 !important;
-  }
-  .custom-cursor.is-hovering .ios-pointer-icon {
-    opacity: 1 !important;
-    transform: scale(1) !important;
-    filter: drop-shadow(0 2px 8px rgba(255, 91, 53, 0.5));
   }
   .custom-cursor.is-hovering .cursor-ring {
     width: 34px;
     height: 34px;
-    border-color: rgba(255, 91, 53, 0.7);
-    background: rgba(255, 91, 53, 0.12);
-    box-shadow: 0 0 14px rgba(255, 91, 53, 0.28);
+    border-color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0;
+  }
+  .custom-cursor.is-hovering .ring-pointer-arrow {
+    opacity: 1 !important;
+    transform: scale(1) rotate(0deg) !important;
+    filter: drop-shadow(0 2px 10px rgba(255, 91, 53, 0.6));
   }
   .custom-cursor.is-hovering .cursor-label {
     opacity: 0 !important;
@@ -2654,7 +2652,7 @@ button { font: inherit; }
     box-shadow: none !important;
     pointer-events: none;
   }
-  .custom-cursor.is-view .ios-pointer-icon {
+  .custom-cursor.is-view .ring-pointer-arrow {
     opacity: 0 !important;
     transform: scale(0.3) !important;
   }
@@ -2678,7 +2676,7 @@ button { font: inherit; }
     box-shadow: none !important;
     pointer-events: none;
   }
-  .custom-cursor.is-code .ios-pointer-icon {
+  .custom-cursor.is-code .ring-pointer-arrow {
     opacity: 0 !important;
     transform: scale(0.3) !important;
   }
@@ -2695,7 +2693,7 @@ button { font: inherit; }
     box-shadow: none !important;
     pointer-events: none;
   }
-  .custom-cursor.is-selecting .ios-pointer-icon {
+  .custom-cursor.is-selecting .ring-pointer-arrow {
     opacity: 0 !important;
     transform: scale(0.3) !important;
   }
@@ -2715,6 +2713,9 @@ button { font: inherit; }
   .custom-cursor.is-down .cursor-ring {
     transform: scale(0.85);
     border-color: var(--orange);
+  }
+  .custom-cursor.is-down.is-hovering .ring-pointer-arrow {
+    transform: scale(0.8) rotate(-4deg) !important;
   }
   .custom-cursor.is-down .cursor-dot {
     transform: scale(0.85);
