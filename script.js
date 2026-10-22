@@ -108,7 +108,7 @@
   /* ═══════════════════════ NAVIGATION OBSERVER ═══════════════════════ */
   var desktopNavLinks = Array.from(document.querySelectorAll(".site-nav a"));
   var allNavTrackedLinks = desktopNavLinks.concat(mobileLinks);
-  var sectionIds = ["systems", "projects", "case", "method", "about", "contact"];
+  var sectionIds = ["top", "systems", "projects", "case", "method", "about", "contact"];
   var sections = sectionIds.map(function (id) {
     return document.getElementById(id);
   }).filter(Boolean);
