@@ -1,14 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Dark Blue Chassis (--ink: #0f2430) -->
-  <rect width="64" height="64" rx="16" fill="#0f2430"/>
-  <rect x="0.75" y="0.75" width="62.5" height="62.5" rx="15.25" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" fill="none"/>
-  
-  <!-- Orange Terminal Route Slash (--orange: #ff5b35) -->
-  <path d="M16 47 L25 17" stroke="#ff5b35" stroke-width="5" stroke-linecap="round"/>
-  
-  <!-- White Architectural Monogram B (--white: #ffffff) -->
-  <path d="M28 17 H39 C43.5 17 47 19.8 47 24 C47 27.2 44.8 29.8 41.5 31 C45.5 32.2 48 35.8 48 40.5 C48 45.5 44 49 38.5 49 H28 V17 Z M34 22.5 V28.5 H38.5 C40.5 28.5 42 27.5 42 25.5 C42 23.5 40.5 22.5 38.5 22.5 H34 Z M34 35 V43.5 H39 C41.5 43.5 43 42 43 39.5 C43 37 41.5 35 39 35 H34 Z" fill="#ffffff"/>
-  
-  <!-- Green Terminal Verified Status Tick (--green-light: #5ed6a2) -->
-  <path d="M46.5 19 L49 22 L53 16.5" stroke="#5ed6a2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <style>
+    path { stroke: #0f2430; }
+    @media (prefers-color-scheme: dark) {
+      path { stroke: #ffffff; }
+    }
+  </style>
+  <path d="M 18 54 C 18 40, 24 35, 29 35 C 33 35, 34 46, 36 50 C 38 44, 40 32, 47 23 C 57 14, 65 21, 61 33 C 58 40, 48 44, 44 45 C 53 47, 68 52, 68 63 C 68 73, 53 78, 42 77 C 32 76, 35 66, 45 62 C 55 58, 66 62, 73 70" fill="none" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

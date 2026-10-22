@@ -24,13 +24,13 @@ def make_ico(png_data, width, height):
     ico_dir = struct.pack('<BBBBHHII', w, h, 0, 0, 1, 32, len(png_data), 6 + 16)
     return ico_header + ico_dir + png_data
 
+# Generate 64x64 icon
 W, H = 64, 64
 pixels = [[[0, 0, 0, 0] for _ in range(W)] for _ in range(H)]
 
+# Chassis color & Stroke color
 C_DARK = (15, 36, 48, 255)       # #0f2430
 C_WHITE = (255, 255, 255, 255)   # #ffffff
-C_ORANGE = (255, 91, 53, 255)    # #ff5b35
-C_GREEN = (94, 214, 162, 255)    # #5ed6a2
 
 def blend(c_bottom, c_top):
     a_top = c_top[3] / 255.0
@@ -43,15 +43,7 @@ def blend(c_bottom, c_top):
     b = int((c_top[2] * a_top + c_bottom[2] * a_bot * (1 - a_top)) / a_out)
     return [r, g, b, int(a_out * 255)]
 
-def dist_seg(px, py, x1, y1, x2, y2):
-    dx, dy = x2 - x1, y2 - y1
-    l2 = dx*dx + dy*dy
-    if l2 == 0:
-        return math.hypot(px - x1, py - y1)
-    t = max(0, min(1, ((px - x1)*dx + (py - y1)*dy) / l2))
-    return math.hypot(px - (x1 + t*dx), py - (y1 + t*dy))
-
-# 1. Background dark squircle
+# 1. Dark squircle (rx=16 on 64x64)
 for y in range(H):
     for x in range(W):
         dx = max(0, abs(x - 31.5) - (31.5 - 16))
@@ -61,53 +53,78 @@ for y in range(H):
             alpha = min(1.0, max(0.0, 16.5 - d))
             pixels[y][x] = [C_DARK[0], C_DARK[1], C_DARK[2], int(C_DARK[3] * alpha)]
 
-# 2. Orange Route Slash: (16, 47) to (25, 17), thickness 5 (radius 2.5)
-for y in range(H):
-    for x in range(W):
-        d = dist_seg(x, y, 16, 47, 25, 17)
-        if d <= 2.5:
-            alpha = min(1.0, max(0.0, 3.0 - d))
-            pixels[y][x] = blend(pixels[y][x], [C_ORANGE[0], C_ORANGE[1], C_ORANGE[2], int(255 * alpha)])
+# 2. Cubic bezier curves for Option 1:
+# Path commands:
+# Start: (18, 54)
+# C 18 40, 24 35, 29 35
+# C 33 35, 34 46, 36 50
+# C 38 44, 40 32, 47 23
+# C 57 14, 65 21, 61 33
+# C 58 40, 48 44, 44 45
+# C 53 47, 68 52, 68 63
+# C 68 73, 53 78, 42 77
+# C 32 76, 35 66, 45 62
+# C 55 58, 66 62, 73 70
 
-# 3. White B Monogram:
-# Backbone: x in 28..34, y in 17..49
-# Top loop: outer arc r_out=7 centered at (36, 25.5), inner cutout r_in=3
-# Bottom loop: outer arc r_out=8 centered at (36.5, 39.5), inner cutout r_in=3.5
-for y in range(H):
-    for x in range(W):
-        is_b = False
-        # Spine
-        if 28 <= x <= 34 and 17 <= y <= 49:
-            is_b = True
-        # Top outer rect / arc
-        if 34 < x <= 45 and 17 <= y <= 31:
-            if x <= 38 or math.hypot(x - 38, y - 24) <= 7:
-                is_b = True
-        # Bottom outer rect / arc
-        if 34 < x <= 47 and 31 < y <= 49:
-            if x <= 39 or math.hypot(x - 39, y - 40) <= 8.5:
-                is_b = True
-        
-        # Cutouts
-        if 34 <= x <= 39 and 22 <= y <= 28.5:
-            if x <= 36.5 or math.hypot(x - 36.5, y - 25.25) <= 3.25:
-                is_b = False
-        if 34 <= x <= 40 and 35 <= y <= 43.5:
-            if x <= 37 or math.hypot(x - 37, y - 39.25) <= 4.25:
-                is_b = False
-        
-        if is_b:
-            pixels[y][x] = blend(pixels[y][x], [C_WHITE[0], C_WHITE[1], C_WHITE[2], 255])
+beziers = [
+    ((18, 54), (18, 40), (24, 35), (29, 35)),
+    ((29, 35), (33, 35), (34, 46), (36, 50)),
+    ((36, 50), (38, 44), (40, 32), (47, 23)),
+    ((47, 23), (57, 14), (65, 21), (61, 33)),
+    ((61, 33), (58, 40), (48, 44), (44, 45)),
+    ((44, 45), (53, 47), (68, 52), (68, 63)),
+    ((68, 63), (68, 73), (53, 78), (42, 77)),
+    ((42, 77), (32, 76), (35, 66), (45, 62)),
+    ((45, 62), (55, 58), (66, 62), (73, 70))
+]
 
-# 4. Green Status Tick: (46.5, 19) -> (49, 22) -> (53, 16.5), thickness 2.5 (r=1.25)
+def eval_cubic(p0, p1, p2, p3, t):
+    it = 1 - t
+    x = it**3 * p0[0] + 3 * it**2 * t * p1[0] + 3 * it * t**2 * p2[0] + t**3 * p3[0]
+    y = it**3 * p0[1] + 3 * it**2 * t * p1[1] + 3 * it * t**2 * p2[1] + t**3 * p3[1]
+    return x, y
+
+# Sample points along the curves and map from 100x100 to 64x64
+# Scale: map 10..90 in 100x100 to 6..58 in 64x64
+points = []
+for p0, p1, p2, p3 in beziers:
+    steps = 80
+    for s in range(steps + 1):
+        t = s / float(steps)
+        bx, by = eval_cubic(p0, p1, p2, p3, t)
+        # Center and scale:
+        sx = 32.0 + (bx - 45.5) * 0.76
+        sy = 32.0 + (by - 46.5) * 0.76
+        points.append((sx, sy))
+
+# Distance to segments
+def dist_seg(px, py, x1, y1, x2, y2):
+    dx, dy = x2 - x1, y2 - y1
+    l2 = dx*dx + dy*dy
+    if l2 == 0:
+        return math.hypot(px - x1, py - y1)
+    t = max(0, min(1, ((px - x1)*dx + (py - y1)*dy) / l2))
+    return math.hypot(px - (x1 + t*dx), py - (y1 + t*dy))
+
+# Render stroke onto pixels (stroke width = 4.8 in 64x64 space, radius = 2.4)
+RADIUS = 2.4
 for y in range(H):
     for x in range(W):
-        d1 = dist_seg(x, y, 46.5, 19, 49, 22)
-        d2 = dist_seg(x, y, 49, 22, 53, 16.5)
-        d = min(d1, d2)
-        if d <= 1.5:
-            alpha = min(1.0, max(0.0, 2.0 - d))
-            pixels[y][x] = blend(pixels[y][x], [C_GREEN[0], C_GREEN[1], C_GREEN[2], int(255 * alpha)])
+        min_d = float('inf')
+        for i in range(len(points) - 1):
+            p_a = points[i]
+            p_b = points[i+1]
+            # Quick bounding box check
+            if abs(x - p_a[0]) > 6 and abs(x - p_b[0]) > 6:
+                continue
+            if abs(y - p_a[1]) > 6 and abs(y - p_b[1]) > 6:
+                continue
+            d = dist_seg(x, y, p_a[0], p_a[1], p_b[0], p_b[1])
+            if d < min_d:
+                min_d = d
+        if min_d <= RADIUS + 0.6:
+            alpha = min(1.0, max(0.0, (RADIUS + 0.6) - min_d))
+            pixels[y][x] = blend(pixels[y][x], [C_WHITE[0], C_WHITE[1], C_WHITE[2], int(255 * alpha)])
 
 png_data = make_png(W, H, pixels)
 with open('favicon.png', 'wb') as f:
@@ -117,4 +134,4 @@ ico_data = make_ico(png_data, W, H)
 with open('favicon.ico', 'wb') as f:
     f.write(ico_data)
 
-print("Generated Concept 5 favicon.png and favicon.ico successfully!")
+print("Generated Option 1 MB monogram favicon.png and favicon.ico successfully!")
