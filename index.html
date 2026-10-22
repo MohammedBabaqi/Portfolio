@@ -976,12 +976,17 @@
       <span class="cursor-label" id="cursorLabel"></span>
       <!-- Arrow / Triangle Pointer Shape that transforms the circle on button/link hover -->
       <svg class="ring-pointer-arrow" id="ringPointerArrow" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-        <path d="M 6 6 L 26 13 L 18 18 L 13 26 Z" 
-              fill="rgba(255, 91, 53, 0.22)" 
-              stroke="#ff5b35" 
-              stroke-width="2" 
+        <!-- High-contrast dark chassis with crisp white outline -->
+        <path class="arrow-base" d="M 6 6 L 26 13 L 18 18 L 13 26 Z" 
+              fill="#081620" 
+              stroke="#ffffff" 
+              stroke-width="2.2" 
               stroke-linejoin="round" 
               stroke-linecap="round"/>
+        <!-- Luminous emerald mint inner telemetry facet for maximum contrast on orange and dark buttons -->
+        <path class="arrow-facet" d="M 8.5 8.5 L 21.5 13.5 L 17 17 L 13.5 21.5 Z" 
+              fill="#5ed6a2" 
+              opacity="0.9"/>
       </svg>
     </div>
   </div>

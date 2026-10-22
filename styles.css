@@ -2568,6 +2568,14 @@ button { font: inherit; }
     pointer-events: none;
     transition: opacity .18s ease, transform .22s cubic-bezier(0.16, 1, 0.3, 1);
   }
+  .ring-pointer-arrow .arrow-base {
+    fill: #081620;
+    stroke: #ffffff;
+    stroke-width: 2.2px;
+  }
+  .ring-pointer-arrow .arrow-facet {
+    fill: #5ed6a2;
+  }
 
   /* 2. THE CIRCLE (The Accessory Follower) */
   .cursor-ring {
@@ -2629,7 +2637,7 @@ button { font: inherit; }
   .custom-cursor.is-hovering .ring-pointer-arrow {
     opacity: 1 !important;
     transform: scale(1) rotate(0deg) !important;
-    filter: drop-shadow(0 2px 10px rgba(255, 91, 53, 0.65));
+    filter: drop-shadow(0 3px 12px rgba(0, 0, 0, 0.75));
   }
   .custom-cursor.is-hovering .cursor-label {
     opacity: 0 !important;
