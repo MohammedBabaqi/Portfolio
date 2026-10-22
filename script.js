@@ -10,28 +10,31 @@
   }
   updateHeader();
   window.addEventListener("scroll", updateHeader, { passive: true });
-  /* ═══════════════════════ LOGO BRAND CARD TOGGLE ═══════════════════════ */
-  var brandWrapper = document.getElementById("brandWrapper");
-  var brandToggle = document.getElementById("brandToggle");
-  if (brandWrapper && brandToggle) {
-    brandToggle.addEventListener("click", function (e) {
-      e.stopPropagation();
-      var isOpen = brandWrapper.classList.toggle("is-open");
-      brandToggle.setAttribute("aria-expanded", String(isOpen));
-    });
+  /* ═══════════════════════ CREATIVE BRAND LOGO CLICK & SCROLL ═══════════════════════ */
+  var brandLogo = document.getElementById("brandLogo");
+  if (brandLogo) {
+    brandLogo.addEventListener("click", function (e) {
+      e.preventDefault();
+      // Kinetic recoil and telemetry shockwave
+      brandLogo.classList.remove("is-launching");
+      void brandLogo.offsetWidth; // Force CSS reflow
+      brandLogo.classList.add("is-launching");
 
-    document.addEventListener("click", function (e) {
-      if (!brandWrapper.contains(e.target)) {
-        brandWrapper.classList.remove("is-open");
-        brandToggle.setAttribute("aria-expanded", "false");
-      }
-    });
+      // Smooth kinetic scroll to the first section (Hero / top)
+      var target = document.getElementById("top") || document.body;
+      target.scrollIntoView({
+        behavior: reducedMotion ? "auto" : "smooth",
+        block: "start"
+      });
 
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") {
-        brandWrapper.classList.remove("is-open");
-        brandToggle.setAttribute("aria-expanded", "false");
+      // Clear any hash cleanly without page jump
+      if (window.location.hash) {
+        history.pushState(null, "", window.location.pathname + window.location.search);
       }
+
+      setTimeout(function () {
+        brandLogo.classList.remove("is-launching");
+      }, 550);
     });
   }
 
