@@ -1848,11 +1848,13 @@ button { font: inherit; }
   overflow: hidden;
   background: #091720;
   display: block;
+  text-decoration: none;
+  cursor: pointer;
 }
 .archive-preview-img {
   width: 100%;
   height: auto;
-  aspect-ratio: 1790 / 855;
+  aspect-ratio: 1024 / 480;
   object-fit: cover;
   display: block;
   transition: transform .6s var(--ease), filter .4s var(--ease);
@@ -3031,25 +3033,204 @@ button { font: inherit; }
   .agent-console {
     min-height: 14rem;
   }
+  /* Projects Section Responsive (<= 700px) */
+  .projects-grid {
+    gap: 1.5rem;
+  }
   .project-card,
   .project-card-flagship {
-    padding: 1.25rem;
+    padding: 1.25rem 1.15rem;
+    box-shadow: 6px 6px 0 var(--ink);
+    border-radius: 4px;
+  }
+  .project-card:hover,
+  .project-card-flagship:hover {
+    transform: none;
+    box-shadow: 6px 6px 0 var(--orange);
+  }
+  .project-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .75rem;
+    margin-bottom: 1.15rem;
+    padding-bottom: .85rem;
+  }
+  .project-classification {
+    width: 100%;
+    gap: .5rem;
+  }
+  .project-badge {
+    font-size: .58rem;
+  }
+  .project-live-badge {
+    font-size: .52rem;
+    padding: .18rem .5rem;
+  }
+  .project-links {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+  }
+  .project-gh-link,
+  .project-demo-link {
+    font-size: .6rem;
+    padding: .32rem .65rem;
+  }
+  .project-title {
+    font-size: 1.45rem;
+  }
+  .project-card-flagship .project-title {
+    font-size: 1.6rem;
+  }
+  .ar-title {
+    font-size: 1.15em;
+    line-height: 1.25;
+  }
+  .en-title {
+    font-size: .82em;
+  }
+  .project-lede {
+    font-size: .88rem;
+    line-height: 1.45;
+    margin-bottom: .75rem;
+  }
+  .project-quote {
+    margin: .75rem 0;
+    padding: .65rem .85rem;
+    font-size: 1.05rem;
+    line-height: 1.5;
+  }
+  .project-quote cite {
+    font-size: .58rem;
+    margin-top: .3rem;
+  }
+  .project-desc {
+    font-size: .88rem;
+    line-height: 1.6;
+    margin-bottom: 1.15rem;
+  }
+  .project-metrics {
+    grid-template-columns: repeat(2, 1fr);
+    gap: .6rem .75rem;
+    padding: .75rem .85rem;
+    margin-bottom: 1.15rem;
+  }
+  .p-metric strong {
+    font-size: 1.05rem;
+  }
+  .p-metric span {
+    font-size: .52rem;
+  }
+  .tag-list {
+    gap: .35rem;
+    margin-bottom: .75rem;
+  }
+  .tag-list li {
+    padding: .32rem .55rem;
+    font-size: .54rem;
+  }
+  .project-actions-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: .5rem;
+    padding-top: 1.15rem;
+    margin-top: 1rem;
+  }
+  .project-action-btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    padding: .65rem .85rem;
+    font-size: .66rem;
+  }
+  .archive-window-frame {
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .archive-window-frame:hover {
+    transform: none;
+    box-shadow: 6px 6px 0 var(--orange);
+  }
+  .archive-window-header {
+    padding: .5rem .7rem;
+    gap: .5rem;
+  }
+  .archive-mac-dots span {
+    width: 7px;
+    height: 7px;
+  }
+  .archive-window-address {
+    max-width: 175px;
+    font-size: .52rem;
+    padding: .2rem .5rem;
+  }
+  .archive-live-pill {
+    font-size: .48rem;
+    gap: .25rem;
+  }
+  .archive-image-overlay {
+    bottom: .5rem;
+    left: .5rem;
+    right: .5rem;
+    gap: .35rem;
+  }
+  .archive-tag-pill {
+    font-size: .48rem;
+    padding: .15rem .4rem;
+  }
+  .archive-window-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .35rem;
+    padding: .55rem .75rem;
+    font-size: .52rem;
+  }
+  .project-telemetry {
+    padding: .75rem .85rem;
+    margin-bottom: 1.15rem;
+  }
+  .telemetry-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .25rem;
+    font-size: .52rem;
+    margin-bottom: .6rem;
   }
   .telemetry-flow {
     flex-direction: column;
     align-items: stretch;
     gap: .45rem;
   }
+  .t-node {
+    padding: .35rem .5rem;
+  }
+  .t-node b {
+    font-size: .62rem;
+  }
+  .t-node span {
+    font-size: .48rem;
+  }
   .t-arrow {
     text-align: center;
     transform: rotate(90deg);
-    margin: -.1rem 0;
+    margin: -.05rem 0;
+    font-size: .8rem;
   }
   .bench-row {
     grid-template-columns: 1fr auto;
+    font-size: .62rem;
+    padding: .3rem 0;
   }
   .bench-bar-track {
     display: none;
+  }
+  .bench-model {
+    font-size: .62rem;
+  }
+  .bench-val {
+    font-size: .62rem;
+    font-weight: 700;
+    color: var(--green-light);
   }
   .t-line {
     font-size: .68rem;
@@ -3218,6 +3399,89 @@ button { font: inherit; }
     padding: .15rem .38rem;
     bottom: .35rem;
     right: .35rem;
+  }
+  /* Projects Section Small Mobile (<= 420px) */
+  .projects-grid {
+    gap: 1.25rem;
+  }
+  .project-card,
+  .project-card-flagship {
+    padding: 1rem .85rem;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .project-card:hover,
+  .project-card-flagship:hover {
+    box-shadow: 4px 4px 0 var(--orange);
+  }
+  .project-badge {
+    font-size: .54rem;
+  }
+  .project-live-badge {
+    font-size: .48rem;
+    padding: .15rem .45rem;
+  }
+  .project-card-flagship .project-title {
+    font-size: 1.35rem;
+  }
+  .project-title {
+    font-size: 1.22rem;
+  }
+  .ar-title {
+    font-size: 1.1em;
+  }
+  .project-lede {
+    font-size: .82rem;
+    line-height: 1.4;
+  }
+  .project-quote {
+    font-size: .95rem;
+    padding: .55rem .75rem;
+    margin: .65rem 0;
+  }
+  .project-desc {
+    font-size: .82rem;
+    line-height: 1.55;
+    margin-bottom: 1rem;
+  }
+  .project-metrics {
+    padding: .6rem .7rem;
+    gap: .5rem .6rem;
+  }
+  .p-metric strong {
+    font-size: .94rem;
+  }
+  .p-metric span {
+    font-size: .48rem;
+  }
+  .project-action-btn {
+    font-size: .62rem;
+    padding: .58rem .75rem;
+  }
+  .archive-window-frame {
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .archive-window-address {
+    max-width: 135px;
+    font-size: .48rem;
+    padding: .18rem .42rem;
+  }
+  .archive-live-pill {
+    font-size: .45rem;
+  }
+  .t-node b {
+    font-size: .58rem;
+  }
+  .t-node span {
+    font-size: .45rem;
+  }
+  .bench-row {
+    font-size: .56rem;
+  }
+  .bench-model {
+    font-size: .56rem;
+  }
+  .bench-val {
+    font-size: .56rem;
   }
   .method-list li {
     gap: .75rem;
