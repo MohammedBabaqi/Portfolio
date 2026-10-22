@@ -2611,14 +2611,12 @@ button { font: inherit; }
     opacity: 1;
   }
 
-  /* ══════ STATE A: BUTTON / LINK HOVER (Dot stays a dot, Circle transforms into Arrow / Triangle) ══════ */
+  /* ══════ STATE A: BUTTON / LINK HOVER (Dot is REMOVED, Circle morphs into Arrow / Triangle) ══════ */
   .custom-cursor.is-hovering .cursor-dot {
-    background: var(--orange) !important;
-    width: 6px !important;
-    height: 6px !important;
-    border-radius: 50% !important;
-    box-shadow: 0 0 10px rgba(255, 91, 53, 1), 0 0 3px #fff !important;
-    opacity: 1 !important;
+    opacity: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    pointer-events: none;
   }
   .custom-cursor.is-hovering .cursor-ring {
     width: 34px;
@@ -2631,7 +2629,7 @@ button { font: inherit; }
   .custom-cursor.is-hovering .ring-pointer-arrow {
     opacity: 1 !important;
     transform: scale(1) rotate(0deg) !important;
-    filter: drop-shadow(0 2px 10px rgba(255, 91, 53, 0.6));
+    filter: drop-shadow(0 2px 10px rgba(255, 91, 53, 0.65));
   }
   .custom-cursor.is-hovering .cursor-label {
     opacity: 0 !important;
